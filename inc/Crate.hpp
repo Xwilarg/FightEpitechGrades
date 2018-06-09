@@ -1,13 +1,14 @@
 #ifndef CRATE_HPP_
 # define CRATE_HPP_
 
-# include "MovingGameObject.hpp"
+# include "MovableGameObject.hpp"
 
 namespace feg
 {
-    class Crate : public MovingGameObject
+    class Crate final : public MovableGameObject
     {
     public:
+        Crate(const sf::Texture &texture) noexcept;
         ~Crate() noexcept override = default;
     };
 }

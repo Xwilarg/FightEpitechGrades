@@ -21,7 +21,10 @@ CPPFLAGS = -I ./inc
 
 SRCS	= src/main.cpp \
 		  src/Crate.cpp \
-		  src/TextureManager.cpp
+		  src/TextureManager.cpp \
+		  src/GameObject.cpp \
+		  src/MovableGameObject.cpp \
+		  src/Scene.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
