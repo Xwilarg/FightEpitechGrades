@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
+#include "TextureManager.hpp"
 
 int main()
 {
+    feg::TextureManager tm;
     sf::RenderWindow window(sf::VideoMode(1200, 600), "Fight Epitech Grades");
     while (window.isOpen())
     {

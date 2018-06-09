@@ -20,7 +20,8 @@ LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
 CPPFLAGS = -I ./inc
 
 SRCS	= src/main.cpp \
-		  src/Crate.cpp
+		  src/Crate.cpp \
+		  src/TextureManager.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
