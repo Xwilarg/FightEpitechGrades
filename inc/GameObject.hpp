@@ -9,11 +9,12 @@ namespace feg
     {
     public:
         virtual ~GameObject() noexcept = default;
-        virtual void SetColor(sf::Color &&color) noexcept;
         virtual void Update(sf::RenderWindow &window) noexcept;
+        virtual void SetColor(sf::Color &&color) noexcept;
 
     protected:
         GameObject(const sf::Texture &texture) noexcept;
+        void Translate(const sf::Vector2f &pos) noexcept;
 
     private:
         sf::Sprite _sprite;

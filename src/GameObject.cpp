@@ -15,4 +15,10 @@ namespace feg
     {
         _sprite.setColor(std::move(color));
     }
+
+    void GameObject::Translate(const sf::Vector2f &pos) noexcept
+    {
+        _position += pos;
+        _sprite.setPosition(_position);
+    }
 }

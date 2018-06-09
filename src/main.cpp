@@ -1,13 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include "TextureManager.hpp"
 #include "Crate.hpp"
+#include "Scene.hpp"
 
 int main()
 {
     feg::TextureManager tm;
-    feg::Crate crate(tm.GetTexture("res/WhiteSquare.png"));
-    crate.SetColor(sf::Color(139, 69, 19));
+    feg::Scene mainScene;
+    mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png")).get()->SetColor(sf::Color(139, 69, 19));
     sf::RenderWindow window(sf::VideoMode(1200, 600), "Fight Epitech Grades");
+    window.setFramerateLimit(60);
     while (window.isOpen())
     {
         sf::Event event;
@@ -15,11 +17,11 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-
-            window.clear(sf::Color::White);
-            crate.Update(window);
-            window.display();
         }
+
+        window.clear(sf::Color::White);
+        mainScene.Update(window);
+        window.display();
     }
     return (0);
 }

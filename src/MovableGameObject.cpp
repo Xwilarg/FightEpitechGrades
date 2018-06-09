@@ -3,13 +3,21 @@
 namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
-        : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(0.1f)
+        : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
+        _gravity(.6f)
     { }
 
     void MovableGameObject::Update(sf::RenderWindow &window) noexcept
     {
         GameObject::Update(window);
+        AddForce(sf::Vector2f(0.f, _gravity));
+        Translate(_linearVelocity);
         _linearVelocity /= _linearDrag;
+    }
+
+    void MovableGameObject::AddForce(const sf::Vector2f &force)
+    {
+        _linearVelocity += force;
     }
 
     bool MovableGameObject::DoesCollide(const GameObject &go)

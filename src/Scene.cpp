@@ -8,6 +8,7 @@ namespace feg
 
     void Scene::Update(sf::RenderWindow &window) noexcept
     {
+        printf("EZR");
         for (auto &go : _allGameObjects)
         {
             go.get()->Update(window);

@@ -15,10 +15,12 @@ namespace feg
         MovableGameObject(const sf::Texture &texture) noexcept;
 
     private:
+        void AddForce(const sf::Vector2f &force);
         bool DoesCollide(const GameObject &go);
         bool DoesAxisCollide(float myPosition, float mySize, float otherPosition, float otherSize) const noexcept;
         sf::Vector2f _linearVelocity;
         float _linearDrag;
+        const float _gravity;
     };
 }
 
