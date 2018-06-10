@@ -1,11 +1,11 @@
 #ifndef PLAYER_HPP_
 # define PLAYER_HPP_
 
-# include "MovableGameObject.hpp"
+# include "Character.hpp"
 
 namespace feg
 {
-    class Player final : public MovableGameObject
+    class Player final : public Character
     {
     public:
         struct PlayerInput
@@ -23,8 +23,6 @@ namespace feg
 
     private:
         PlayerInput _input;
-        const float _movForce;
-        const float _jumpForce;
     };
 }
 

@@ -3,7 +3,7 @@ CC	= g++
 NAME	= feg.out
 
 CXXFLAGS += -Wall -Wextra
-CXXFLAGS += -Weffc++
+#CXXFLAGS += -Weffc++
 CXXFLAGS += -Wshadow
 CXXFLAGS += -Wold-style-cast
 CXXFLAGS += -Wcast-align
@@ -25,7 +25,9 @@ SRCS	= src/main.cpp \
 		  src/GameObject.cpp \
 		  src/MovableGameObject.cpp \
 		  src/Scene.cpp \
-		  src/Player.cpp
+		  src/Player.cpp \
+		  src/Ai.cpp \
+		  src/Character.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

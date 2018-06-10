@@ -16,10 +16,10 @@ namespace feg
         { return (_allGameObjects); }
 
         template<typename T, typename... Args>
-        std::shared_ptr<GameObject> AddGameObject(Args &&... args)
+        GameObject *AddGameObject(Args &&... args)
         {
             _allGameObjects.push_back(std::make_shared<T>(args...));
-            return (_allGameObjects[_allGameObjects.size() - 1]);
+            return (_allGameObjects[_allGameObjects.size() - 1].get());
         }
 
         void PressKey(sf::Keyboard::Key key) noexcept;
