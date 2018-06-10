@@ -16,7 +16,8 @@ namespace feg
 
     void Scene::PressKey(sf::Keyboard::Key key) noexcept
     {
-        _keyPressed.push_back(key);
+        if (std::find(_keyPressed.begin(), _keyPressed.end(), key) == _keyPressed.end())
+            _keyPressed.push_back(key);
     }
 
     void Scene::ReleaseKey(sf::Keyboard::Key key) noexcept

@@ -5,7 +5,7 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(.6f), _isOnFloor(false)
+        _gravity(1.1f), _isOnFloor(false)
     { }
 
     void MovableGameObject::Update(const Scene &scene, sf::RenderWindow &window) noexcept

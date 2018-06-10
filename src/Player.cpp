@@ -5,7 +5,7 @@ namespace feg
 {
     Player::Player(const sf::Texture &texture, const PlayerInput &input) noexcept
         : MovableGameObject(texture), _input(input),
-        _movForce(1.2f), _jumpForce(30.f)
+        _movForce(1.2f), _jumpForce(50.f)
     { }
 
     void Player::Update(const Scene &scene, sf::RenderWindow &window) noexcept
