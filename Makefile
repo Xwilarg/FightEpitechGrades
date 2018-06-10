@@ -24,7 +24,8 @@ SRCS	= src/main.cpp \
 		  src/TextureManager.cpp \
 		  src/GameObject.cpp \
 		  src/MovableGameObject.cpp \
-		  src/Scene.cpp
+		  src/Scene.cpp \
+		  src/Player.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

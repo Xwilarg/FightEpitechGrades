@@ -2,6 +2,7 @@
 #include "TextureManager.hpp"
 #include "Crate.hpp"
 #include "Scene.hpp"
+#include "Player.hpp"
 
 int main()
 {
@@ -11,7 +12,9 @@ int main()
     mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png")).get()
         ->SetColor(sf::Color(139, 69, 19));
     mainScene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png")).get()
-        ->SetPosition(sf::Vector2f(0.f, yWinl))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
+        ->SetPosition(sf::Vector2f(0.f, yWin - 25.f))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
+    mainScene.AddGameObject<feg::Player>(tm.GetTexture("res/WhiteSquare.png"), feg::Player::PlayerInput(sf::Keyboard::Q, sf::Keyboard::D)).get()
+        ->SetPosition(sf::Vector2f(100.f, yWin - 150.f))->SetColor(sf::Color(255, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f));
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");
     window.setFramerateLimit(60);
     while (window.isOpen())
@@ -19,7 +22,11 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::KeyPressed)
+                mainScene.PressKey(event.key.code);
+            else if (event.type == sf::Event::KeyReleased)
+                mainScene.ReleaseKey(event.key.code);
+            else if (event.type == sf::Event::Closed)
                 window.close();
         }
 
