@@ -5,21 +5,29 @@
 
 namespace feg
 {
+    class Scene;
+
     class GameObject
     {
     public:
+        GameObject(const sf::Texture &texture) noexcept;
         virtual ~GameObject() noexcept = default;
-        virtual void Update(sf::RenderWindow &window) noexcept;
-        virtual void SetColor(sf::Color &&color) noexcept;
+        virtual void Update(const Scene &scene, sf::RenderWindow &window) noexcept;
+        GameObject *SetColor(sf::Color &&color) noexcept;
+        GameObject *SetSize(sf::Vector2f &&size) noexcept;
+        GameObject *SetPosition(sf::Vector2f &&size) noexcept;
+        bool operator==(const GameObject &go) const noexcept;
+        bool operator!=(const GameObject &go) const noexcept;
 
     protected:
-        GameObject(const sf::Texture &texture) noexcept;
         void Translate(const sf::Vector2f &pos) noexcept;
 
     private:
         sf::Sprite _sprite;
         sf::Vector2f _position;
         sf::Vector2f _size;
+        int _myId;
+        static int id;
 
     public:
         const sf::Vector2f &GetPosition() const noexcept { return (_position); }

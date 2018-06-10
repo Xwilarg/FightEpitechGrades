@@ -7,7 +7,10 @@ int main()
 {
     feg::TextureManager tm;
     feg::Scene mainScene;
-    mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png")).get()->SetColor(sf::Color(139, 69, 19));
+    mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png")).get()
+        ->SetColor(sf::Color(139, 69, 19));
+    mainScene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png")).get()
+        ->SetColor(sf::Color(255, 0, 0))->SetPosition(sf::Vector2f(3.f, 350.f));
     sf::RenderWindow window(sf::VideoMode(1200, 600), "Fight Epitech Grades");
     window.setFramerateLimit(60);
     while (window.isOpen())

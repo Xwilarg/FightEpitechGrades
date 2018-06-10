@@ -12,6 +12,8 @@ namespace feg
         Scene() noexcept;
         ~Scene() noexcept = default;
         void Update(sf::RenderWindow &window) noexcept;
+        const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
+        { return (_allGameObjects); }
 
         template<typename T, typename... Args>
         std::shared_ptr<GameObject> AddGameObject(Args &&... args)
