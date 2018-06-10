@@ -5,7 +5,7 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(.6f)
+        _gravity(.6f), _isOnFloor(false)
     { }
 
     void MovableGameObject::Update(const Scene &scene, sf::RenderWindow &window) noexcept
@@ -33,9 +33,15 @@ namespace feg
         else
             _linearVelocity = sf::Vector2f(0.f, _linearVelocity.y);
         if (canMoveY)
+        {
             Translate(sf::Vector2f(0.f, _linearVelocity.y));
+            _isOnFloor = false;
+        }
         else
+        {
             _linearVelocity = sf::Vector2f(_linearVelocity.x, 0.f);
+            _isOnFloor = true;
+        }
         _linearVelocity /= _linearDrag;
     }
 

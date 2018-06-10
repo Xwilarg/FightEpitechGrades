@@ -14,6 +14,7 @@ namespace feg
 
     protected:
         void AddForce(const sf::Vector2f &force);
+        bool IsOnFloor() const noexcept { return (_isOnFloor); }
 
     private:
         bool DoesCollide(const GameObject &go, bool addXVelocity = true, bool addYVelocity = true);
@@ -21,6 +22,7 @@ namespace feg
         sf::Vector2f _linearVelocity;
         float _linearDrag;
         const float _gravity;
+        bool _isOnFloor;
     };
 }
 
