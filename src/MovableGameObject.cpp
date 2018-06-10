@@ -44,9 +44,9 @@ namespace feg
 
     bool MovableGameObject::DoesAxisCollide(const float myPosition, const float mySize, const float otherPosition, const float otherSize) const noexcept
     {
-        return ((myPosition - mySize / 2 <= otherPosition - otherSize / 2
+        return ((myPosition + mySize / 2 <= otherPosition + otherSize / 2
                 && myPosition + mySize / 2 >= otherPosition - otherSize / 2)
                 || (myPosition - mySize / 2 <= otherPosition + otherSize / 2
-                && myPosition + mySize / 2 >= otherPosition + otherSize / 2));
+                && myPosition - mySize / 2 >= otherPosition - otherSize / 2));
     }
 }

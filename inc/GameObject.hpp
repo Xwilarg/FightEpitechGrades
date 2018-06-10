@@ -14,7 +14,7 @@ namespace feg
         virtual ~GameObject() noexcept = default;
         virtual void Update(const Scene &scene, sf::RenderWindow &window) noexcept;
         GameObject *SetColor(sf::Color &&color) noexcept;
-        GameObject *SetSize(sf::Vector2f &&size) noexcept;
+        GameObject *SetScale(sf::Vector2f &&scale) noexcept;
         GameObject *SetPosition(sf::Vector2f &&size) noexcept;
         bool operator==(const GameObject &go) const noexcept;
         bool operator!=(const GameObject &go) const noexcept;
@@ -25,6 +25,7 @@ namespace feg
     private:
         sf::Sprite _sprite;
         sf::Vector2f _position;
+        const sf::Vector2f _baseSize;
         sf::Vector2f _size;
         int _myId;
         static int id;

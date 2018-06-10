@@ -3,7 +3,8 @@
 namespace feg
 {
     GameObject::GameObject(const sf::Texture &texture) noexcept
-        : _sprite(texture), _position(sf::Vector2f(0.f, 0.f)), _size(sf::Vector2f(50.f, 50.f)),
+        : _sprite(texture), _position(sf::Vector2f(0.f, 0.f)),
+        _baseSize(sf::Vector2f(50.f, 50.f)), _size(_baseSize),
         _myId(id++)
     { }
 
@@ -18,9 +19,10 @@ namespace feg
         return (this);
     }
 
-    GameObject *GameObject::SetSize(sf::Vector2f &&size) noexcept
+    GameObject *GameObject::SetScale(sf::Vector2f &&scale) noexcept
     {
-        _size = std::move(size);
+        _sprite.setScale(scale);
+        _size = sf::Vector2f(_baseSize.x * scale.x, _baseSize.y * scale.y);
         return (this);
     }
 
