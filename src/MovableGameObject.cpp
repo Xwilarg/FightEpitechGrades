@@ -39,8 +39,9 @@ namespace feg
         }
         else
         {
+            if (_linearVelocity.y > 0.f)
+                _isOnFloor = true;
             _linearVelocity = sf::Vector2f(_linearVelocity.x, 0.f);
-            _isOnFloor = true;
         }
         _linearVelocity /= _linearDrag;
     }
