@@ -55,6 +55,10 @@ namespace feg
         return ((myPosition + mySize <= otherPosition + otherSize
                 && myPosition + mySize >= otherPosition)
                 || (myPosition <= otherPosition + otherSize
-                && myPosition >= otherPosition));
+                && myPosition >= otherPosition)
+                || (myPosition >= otherPosition
+                && myPosition + mySize <= otherPosition + otherSize)
+                || (myPosition <= otherPosition
+                && myPosition + mySize >= otherPosition + otherSize));
     }
 }
