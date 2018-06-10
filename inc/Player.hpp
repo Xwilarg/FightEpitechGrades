@@ -21,6 +21,7 @@ namespace feg
 
     private:
         PlayerInput _input;
+        const float _movForce;
     };
 }
 

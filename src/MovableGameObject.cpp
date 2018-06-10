@@ -11,23 +11,31 @@ namespace feg
     void MovableGameObject::Update(const Scene &scene, sf::RenderWindow &window) noexcept
     {
         GameObject::Update(scene, window);
-        bool canMove = true;
+        AddForce(sf::Vector2f(0.f, _gravity));
+        bool canMoveX = true;
+        bool canMoveY = true;
         for (const auto &go : scene.GetAllGameObjects())
         {
             if (*go.get() != *this)
             {
                 if (DoesCollide(*go.get()))
                 {
-                    canMove = false;
-                    break;
+                    if (DoesCollide(*go.get(), true, false))
+                        canMoveX = false;
+                    if (DoesCollide(*go.get(), false, true))
+                        canMoveY = false;
+                    
                 }
             }
         }
-        if (canMove)
-        {
-            AddForce(sf::Vector2f(0.f, _gravity));
-            Translate(_linearVelocity);
-        }
+        if (canMoveX)
+            Translate(sf::Vector2f(_linearVelocity.x, 0.f));
+        else
+            _linearVelocity = sf::Vector2f(0.f, _linearVelocity.y);
+        if (canMoveY)
+            Translate(sf::Vector2f(0.f, _linearVelocity.y));
+        else
+            _linearVelocity = sf::Vector2f(_linearVelocity.x, 0.f);
         _linearVelocity /= _linearDrag;
     }
 
@@ -36,17 +44,17 @@ namespace feg
         _linearVelocity += force;
     }
 
-    bool MovableGameObject::DoesCollide(const GameObject &go)
+    bool MovableGameObject::DoesCollide(const GameObject &go, bool addXVelocity, bool addYVelocity)
     {
-        return (DoesAxisCollide(GetPosition().x + _linearVelocity.x, GetSize().x, go.GetPosition().x, go.GetSize().x)
-                && DoesAxisCollide(GetPosition().y + _linearVelocity.y, GetSize().y, go.GetPosition().y, go.GetSize().y));
+        return (DoesAxisCollide(GetPosition().x + ((addXVelocity) ? (_linearVelocity.x) : (0)), GetSize().x, go.GetPosition().x, go.GetSize().x)
+        && DoesAxisCollide(GetPosition().y + ((addYVelocity) ? (_linearVelocity.y) : (0)), GetSize().y, go.GetPosition().y, go.GetSize().y));
     }
 
     bool MovableGameObject::DoesAxisCollide(const float myPosition, const float mySize, const float otherPosition, const float otherSize) const noexcept
     {
-        return ((myPosition + mySize / 2 <= otherPosition + otherSize / 2
-                && myPosition + mySize / 2 >= otherPosition - otherSize / 2)
-                || (myPosition - mySize / 2 <= otherPosition + otherSize / 2
-                && myPosition - mySize / 2 >= otherPosition - otherSize / 2));
+        return ((myPosition + mySize <= otherPosition + otherSize
+                && myPosition + mySize >= otherPosition)
+                || (myPosition <= otherPosition + otherSize
+                && myPosition >= otherPosition));
     }
 }

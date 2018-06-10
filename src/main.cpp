@@ -10,11 +10,15 @@ int main()
     feg::TextureManager tm;
     feg::Scene mainScene;
     mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png")).get()
-        ->SetColor(sf::Color(139, 69, 19));
+        ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(350.f, 0.f));
     mainScene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png")).get()
-        ->SetPosition(sf::Vector2f(0.f, yWin - 25.f))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
+        ->SetPosition(sf::Vector2f(0.f, yWin))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
+    mainScene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png")).get()
+        ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f));
+    mainScene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png")).get()
+        ->SetPosition(sf::Vector2f(xWin, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f));
     mainScene.AddGameObject<feg::Player>(tm.GetTexture("res/WhiteSquare.png"), feg::Player::PlayerInput(sf::Keyboard::Q, sf::Keyboard::D)).get()
-        ->SetPosition(sf::Vector2f(100.f, yWin - 150.f))->SetColor(sf::Color(255, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f));
+        ->SetPosition(sf::Vector2f(100.f, yWin - 650.f))->SetColor(sf::Color(255, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f));
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");
     window.setFramerateLimit(60);
     while (window.isOpen())

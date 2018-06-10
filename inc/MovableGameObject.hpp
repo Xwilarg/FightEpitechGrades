@@ -12,9 +12,11 @@ namespace feg
         ~MovableGameObject() noexcept override = default;
         void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
 
-    private:
+    protected:
         void AddForce(const sf::Vector2f &force);
-        bool DoesCollide(const GameObject &go);
+
+    private:
+        bool DoesCollide(const GameObject &go, bool addXVelocity = true, bool addYVelocity = true);
         bool DoesAxisCollide(float myPosition, float mySize, float otherPosition, float otherSize) const noexcept;
         sf::Vector2f _linearVelocity;
         float _linearDrag;
