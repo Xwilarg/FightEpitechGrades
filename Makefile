@@ -27,7 +27,8 @@ SRCS	= src/main.cpp \
 		  src/Scene.cpp \
 		  src/Player.cpp \
 		  src/Ai.cpp \
-		  src/Character.cpp
+		  src/Character.cpp \
+		  src/PhysicsManager.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

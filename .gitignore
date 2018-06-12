@@ -1,3 +1,6 @@
+# Callgrind
+callgrind.out.*
+
 # Visual Studio Code
 .vscode
 

@@ -4,9 +4,11 @@
 #include "Scene.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
+#include "PhysicsManager.hpp"
 
 constexpr static unsigned int xWin = 1200, yWin = 600;
 static feg::TextureManager tm;
+static feg::PhysicsManager pm;
 
 void AddWalls(feg::Scene &scene)
 {
@@ -22,7 +24,8 @@ void AddWalls(feg::Scene &scene)
 
 int main()
 {
-    feg::Scene mainScene;
+    pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
+    feg::Scene mainScene(pm);
     AddWalls(mainScene);
     mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png"))
         ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(350.f, 0.f));

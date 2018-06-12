@@ -2,6 +2,7 @@
 # define GAMEOBJECT_HPP_
 
 # include <SFML/Graphics.hpp>
+# include "PhysicsManager.hpp"
 
 namespace feg
 {
@@ -21,6 +22,7 @@ namespace feg
 
     protected:
         void Translate(const sf::Vector2f &pos) noexcept;
+        void SetLayer(PhysicsManager::PhysicsLayer layer) noexcept;
 
     private:
         sf::Sprite _sprite;
@@ -28,11 +30,13 @@ namespace feg
         const sf::Vector2f _baseSize;
         sf::Vector2f _size;
         int _myId;
+        PhysicsManager::PhysicsLayer _layer;
         static int id;
 
     public:
         const sf::Vector2f &GetPosition() const noexcept { return (_position); }
         const sf::Vector2f &GetSize() const noexcept { return (_size); }
+        PhysicsManager::PhysicsLayer GetLayer() const noexcept { return (_layer); }
     };
 }
 

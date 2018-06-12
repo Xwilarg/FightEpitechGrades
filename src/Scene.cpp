@@ -2,8 +2,8 @@
 
 namespace feg
 {
-    Scene::Scene() noexcept
-        : _allGameObjects(), _keyPressed()
+    Scene::Scene(const PhysicsManager &physics) noexcept
+        : _physics(physics), _allGameObjects(), _keyPressed()
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
@@ -29,5 +29,10 @@ namespace feg
     bool Scene::IsPressed(sf::Keyboard::Key key) const noexcept
     {
         return (std::find(_keyPressed.begin(), _keyPressed.end(), key) != _keyPressed.end());
+    }
+
+    bool Scene::DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept
+    {
+        return (_physics.DoesLayersCollide(layer1, layer2));
     }
 }

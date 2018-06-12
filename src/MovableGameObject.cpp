@@ -16,7 +16,7 @@ namespace feg
         bool canMoveY = true;
         for (const auto &go : scene.GetAllGameObjects())
         {
-            if (*go.get() != *this)
+            if (*go.get() != *this && !scene.DoesLayersCollide(GetLayer(), go.get()->GetLayer()))
             {
                 if (DoesCollide(*go.get()))
                 {

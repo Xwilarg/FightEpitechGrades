@@ -9,7 +9,7 @@ namespace feg
     class Scene final
     {
     public:
-        Scene() noexcept;
+        Scene(const PhysicsManager &physics) noexcept;
         ~Scene() noexcept = default;
         void Update(sf::RenderWindow &window) noexcept;
         const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
@@ -26,7 +26,10 @@ namespace feg
         void ReleaseKey(sf::Keyboard::Key key) noexcept;
         bool IsPressed(sf::Keyboard::Key key) const noexcept;
 
+        bool DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept;
+
     private:
+        const PhysicsManager &_physics;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<sf::Keyboard::Key> _keyPressed;
     };
