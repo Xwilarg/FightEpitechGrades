@@ -22,7 +22,8 @@ namespace feg
 
     void Scene::ReleaseKey(sf::Keyboard::Key key) noexcept
     {
-        _keyPressed.erase(std::find(_keyPressed.begin(), _keyPressed.end(), key));
+        if (std::find(_keyPressed.begin(), _keyPressed.end(), key) != _keyPressed.end())
+            _keyPressed.erase(std::find(_keyPressed.begin(), _keyPressed.end(), key));
     }
 
     bool Scene::IsPressed(sf::Keyboard::Key key) const noexcept
