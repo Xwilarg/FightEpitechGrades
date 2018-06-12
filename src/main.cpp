@@ -1,38 +1,36 @@
 #include <SFML/Graphics.hpp>
-#include "TextureManager.hpp"
+#include "GameManager.hpp"
 #include "Crate.hpp"
 #include "Scene.hpp"
 #include "Player.hpp"
 #include "Ai.hpp"
-#include "PhysicsManager.hpp"
 
 constexpr static unsigned int xWin = 1200, yWin = 600;
-static feg::TextureManager tm;
-static feg::PhysicsManager pm;
+static feg::GameManager gm;
 
 void AddWalls(feg::Scene &scene)
 {
-    scene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png"))
+    scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(0.f, yWin))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
-    scene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png"))
+    scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(0.f, -50.f))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
-    scene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png"))
+    scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f));
-    scene.AddGameObject<feg::GameObject>(tm.GetTexture("res/WhiteSquare.png"))
+    scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(xWin, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f));
 }
 
 int main()
 {
-    pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
-    feg::Scene mainScene(pm);
+    gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
+    feg::Scene mainScene(gm);
     AddWalls(mainScene);
-    mainScene.AddGameObject<feg::Crate>(tm.GetTexture("res/WhiteSquare.png"))
+    mainScene.AddGameObject<feg::Crate>(gm.tm.GetTexture("res/WhiteSquare.png"))
         ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(350.f, 0.f));
-    dynamic_cast<feg::Ai*>(mainScene.AddGameObject<feg::Ai>(tm.GetTexture("res/WhiteSquare.png"))
+    dynamic_cast<feg::Ai*>(mainScene.AddGameObject<feg::Ai>(gm.tm.GetTexture("res/WhiteSquare.png"), gm.tm)
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f))->SetColor(sf::Color(0.f, 0.f, 255.f))->SetScale(sf::Vector2f(1.f, 2.f)))
         ->SetTarget(
-    mainScene.AddGameObject<feg::Player>(tm.GetTexture("res/WhiteSquare.png"), feg::Player::PlayerInput(
+    mainScene.AddGameObject<feg::Player>(gm.tm.GetTexture("res/WhiteSquare.png"), gm.tm, feg::Player::PlayerInput(
         sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z))
         ->SetPosition(sf::Vector2f(100.f, yWin - 350.f))->SetColor(sf::Color(255.f, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f))
         );

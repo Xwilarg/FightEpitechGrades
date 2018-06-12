@@ -18,7 +18,7 @@ namespace feg
             sf::Keyboard::Key _right;
             sf::Keyboard::Key _jump;
         };
-        Player(const sf::Texture &texture, const PlayerInput &input) noexcept;
+        Player(const sf::Texture &texture, TextureManager &tm, const PlayerInput &input) noexcept;
         void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
 
     private:

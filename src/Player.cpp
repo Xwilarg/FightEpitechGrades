@@ -3,8 +3,8 @@
 
 namespace feg
 {
-    Player::Player(const sf::Texture &texture, const PlayerInput &input) noexcept
-        : Character(texture), _input(input)
+    Player::Player(const sf::Texture &texture, TextureManager &tm, const PlayerInput &input) noexcept
+        : Character(texture, tm), _input(input)
     { }
 
     void Player::Update(const Scene &scene, sf::RenderWindow &window) noexcept

@@ -2,8 +2,8 @@
 
 namespace feg
 {
-    Scene::Scene(const PhysicsManager &physics) noexcept
-        : _physics(physics), _allGameObjects(), _keyPressed()
+    Scene::Scene(const GameManager &manager) noexcept
+        : _manager(manager), _allGameObjects(), _keyPressed()
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
@@ -33,6 +33,6 @@ namespace feg
 
     bool Scene::DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept
     {
-        return (_physics.DoesLayersCollide(layer1, layer2));
+        return (_manager.pm.DoesLayersCollide(layer1, layer2));
     }
 }

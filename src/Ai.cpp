@@ -2,8 +2,8 @@
 
 namespace feg
 {
-    Ai::Ai(const sf::Texture &texture) noexcept
-        : Character(texture), _target(nullptr)
+    Ai::Ai(const sf::Texture &texture, TextureManager &tm) noexcept
+        : Character(texture, tm), _target(nullptr)
     { }
 
     void Ai::Update(const Scene &scene, sf::RenderWindow &window) noexcept

@@ -2,8 +2,8 @@
 
 namespace feg
 {
-    Character::Character(const sf::Texture &texture) noexcept
-        : MovableGameObject(texture),
+    Character::Character(const sf::Texture &texture, TextureManager &tm) noexcept
+        : MovableGameObject(texture), _weapon(tm),
         _movForce(1.2f), _jumpForce(50.f)
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);

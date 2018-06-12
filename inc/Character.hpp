@@ -2,13 +2,14 @@
 # define CHARACTER_HPP_
 
 # include "MovableGameObject.hpp"
+# include "Gun.hpp"
 
 namespace feg
 {
     class Character : public MovableGameObject
     {
     public:
-        Character(const sf::Texture &texture) noexcept;
+        Character(const sf::Texture &texture, TextureManager &tm) noexcept;
         ~Character() noexcept = default;
         void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
 
@@ -18,6 +19,7 @@ namespace feg
         void Jump() noexcept;
 
     private:
+        Handgun _weapon;
         const float _movForce;
         const float _jumpForce;
     };

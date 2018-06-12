@@ -3,13 +3,14 @@
 
 # include <memory>
 # include "GameObject.hpp"
+# include "GameManager.hpp"
 
 namespace feg
 {
     class Scene final
     {
     public:
-        Scene(const PhysicsManager &physics) noexcept;
+        Scene(const GameManager &manager) noexcept;
         ~Scene() noexcept = default;
         void Update(sf::RenderWindow &window) noexcept;
         const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
@@ -29,7 +30,7 @@ namespace feg
         bool DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept;
 
     private:
-        const PhysicsManager &_physics;
+        const GameManager &_manager;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<sf::Keyboard::Key> _keyPressed;
     };
