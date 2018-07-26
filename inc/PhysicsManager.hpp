@@ -11,7 +11,8 @@ namespace feg
         enum PhysicsLayer
         {
             NONE,
-            PLAYER
+            PLAYER,
+            NOCOLLISION
         };
 
         ~PhysicsManager() noexcept = default;

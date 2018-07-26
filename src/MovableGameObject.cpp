@@ -24,7 +24,6 @@ namespace feg
                         canMoveX = false;
                     if (DoesCollide(*go.get(), false, true))
                         canMoveY = false;
-                    
                 }
             }
         }

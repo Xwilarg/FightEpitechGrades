@@ -13,6 +13,8 @@ namespace feg
 
     bool PhysicsManager::DoesLayersCollide(PhysicsLayer layer1, PhysicsLayer layer2) const noexcept
     {
+        if (layer1 == NOCOLLISION || layer2 == NOCOLLISION)
+            return (true);
         for (const auto &pair : _layers)
         {
             if (pair.first == layer1 && pair.second == layer2)

@@ -33,6 +33,19 @@ namespace feg
         return (this);
     }
 
+    GameObject *GameObject::SetPosition(const sf::Vector2f &pos) noexcept
+    {
+        _position = pos;
+        _sprite.setPosition(_position);
+        return (this);
+    }
+
+    GameObject *GameObject::SetLayer(PhysicsManager::PhysicsLayer layer) noexcept
+    {
+        _layer = layer;
+        return (this);
+    }
+
     bool GameObject::operator==(const GameObject &go) const noexcept
     {
         return (_myId == go._myId);
@@ -47,11 +60,6 @@ namespace feg
     {
         _position += pos;
         _sprite.setPosition(_position);
-    }
-
-    void GameObject::SetLayer(PhysicsManager::PhysicsLayer layer) noexcept
-    {
-        _layer = layer;
     }
 
     int GameObject::id = 0;

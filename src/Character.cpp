@@ -33,6 +33,9 @@ namespace feg
 
     void Character::Fire(Scene &scene) const noexcept
     {
-        //scene.AddGameObject<Bullet>(_weapon.Fire());
+        scene.AddGameObject<Bullet>(_weapon.Fire())
+            ->SetColor(sf::Color(0.f, 0.f, 0.f))
+            ->SetPosition(GetPosition())
+            ->SetLayer(PhysicsManager::NOCOLLISION);
     }
 }

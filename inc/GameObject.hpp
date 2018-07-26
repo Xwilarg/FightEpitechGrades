@@ -17,12 +17,13 @@ namespace feg
         GameObject *SetColor(sf::Color &&color) noexcept;
         GameObject *SetScale(sf::Vector2f &&scale) noexcept;
         GameObject *SetPosition(sf::Vector2f &&size) noexcept;
+        GameObject *SetPosition(const sf::Vector2f &size) noexcept;
+        GameObject *SetLayer(PhysicsManager::PhysicsLayer layer) noexcept;
         bool operator==(const GameObject &go) const noexcept;
         bool operator!=(const GameObject &go) const noexcept;
 
     protected:
         void Translate(const sf::Vector2f &pos) noexcept;
-        void SetLayer(PhysicsManager::PhysicsLayer layer) noexcept;
 
     private:
         sf::Sprite _sprite;

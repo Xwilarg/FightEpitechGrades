@@ -3,11 +3,14 @@
 namespace feg
 {
     Scene::Scene(const GameManager &manager) noexcept
-        : _manager(manager), _allGameObjects(), _keyPressed()
+        : _manager(manager), _allGameObjects(), _toAdd(), _keyPressed()
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
     {
+        for (auto &go : _toAdd)
+            _allGameObjects.push_back(std::move(go));
+        _toAdd.clear();
         for (auto &go : _allGameObjects)
             go->Update(*this, window);
     }

@@ -19,8 +19,8 @@ namespace feg
         template<typename T, typename... Args>
         GameObject *AddGameObject(Args &&... args)
         {
-            _allGameObjects.push_back(std::make_shared<T>(std::forward<Args>(args)...));
-            return (_allGameObjects.back().get());
+            _toAdd.push_back(std::make_shared<T>(std::forward<Args>(args)...));
+            return (_toAdd.back().get());
         }
 
         void PressKey(sf::Keyboard::Key key) noexcept;
@@ -32,8 +32,9 @@ namespace feg
     private:
         const GameManager &_manager;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
+        std::vector<std::shared_ptr<GameObject> > _toAdd;
         std::vector<sf::Keyboard::Key> _keyPressed;
     };
 }
 
-#endif // !SCENE
+#endif // !SCENE_HPP
