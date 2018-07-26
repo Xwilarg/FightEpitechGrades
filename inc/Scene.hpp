@@ -23,6 +23,13 @@ namespace feg
             return (_toAdd.back().get());
         }
 
+        template<typename T>
+        GameObject *AddGameObject(std::unique_ptr<T> obj)
+        {
+            _toAdd.push_back(std::move(obj));
+            return (_toAdd.back().get());
+        }
+
         void PressKey(sf::Keyboard::Key key) noexcept;
         void ReleaseKey(sf::Keyboard::Key key) noexcept;
         bool IsPressed(sf::Keyboard::Key key) const noexcept;
