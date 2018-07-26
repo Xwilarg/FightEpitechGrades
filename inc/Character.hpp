@@ -2,7 +2,7 @@
 # define CHARACTER_HPP_
 
 # include "MovableGameObject.hpp"
-# include "Gun.hpp"
+# include "Handgun.hpp"
 
 namespace feg
 {
@@ -17,12 +17,13 @@ namespace feg
         void GoLeft() noexcept;
         void GoRight() noexcept;
         void Jump() noexcept;
-        void Fire(Scene &scene) const noexcept;
+        void Fire(Scene &scene) noexcept;
 
     private:
         Handgun _weapon;
         const float _movForce;
         const float _jumpForce;
+        bool _isFacingRight;
     };
 }
 

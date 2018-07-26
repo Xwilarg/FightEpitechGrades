@@ -5,13 +5,14 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(1.1f), _isOnFloor(false)
+        _gravity(1.1f), _hasGravity(true), _isOnFloor(false)
     { }
 
     void MovableGameObject::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {
         GameObject::Update(scene, window);
-        AddForce(sf::Vector2f(0.f, _gravity));
+        if (_hasGravity)
+            AddForce(sf::Vector2f(0.f, _gravity));
         bool canMoveX = true;
         bool canMoveY = true;
         for (const auto &go : scene.GetAllGameObjects())
@@ -45,9 +46,14 @@ namespace feg
         _linearVelocity /= _linearDrag;
     }
 
-    void MovableGameObject::AddForce(const sf::Vector2f &force)
+    void MovableGameObject::AddForce(const sf::Vector2f &force) noexcept
     {
         _linearVelocity += force;
+    }
+
+    void MovableGameObject::InvertVelocity() noexcept
+    {
+        _linearVelocity = -_linearVelocity;
     }
 
     bool MovableGameObject::DoesCollide(const GameObject &go, bool addXVelocity, bool addYVelocity)

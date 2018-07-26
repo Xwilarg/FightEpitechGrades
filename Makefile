@@ -20,17 +20,19 @@ LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
 CPPFLAGS = -I ./inc
 
 SRCS	= src/main.cpp \
-		  src/Crate.cpp \
+		  src/GameObject/Crate.cpp \
 		  src/TextureManager.cpp \
-		  src/GameObject.cpp \
-		  src/MovableGameObject.cpp \
+		  src/GameObject/GameObject.cpp \
+		  src/GameObject/MovableGameObject.cpp \
 		  src/Scene.cpp \
-		  src/Player.cpp \
-		  src/Ai.cpp \
-		  src/Character.cpp \
+		  src/GameObject/Player.cpp \
+		  src/GameObject/Ai.cpp \
+		  src/GameObject/Character.cpp \
 		  src/PhysicsManager.cpp \
-		  src/Bullet.cpp \
-		  src/Gun.cpp
+		  src/GameObject/Bullet.cpp \
+		  src/Gun/Gun.cpp \
+		  src/Chrono.cpp \
+		  src/Gun/Handgun.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

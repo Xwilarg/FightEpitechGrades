@@ -11,9 +11,12 @@ namespace feg
         MovableGameObject(const sf::Texture &texture) noexcept;
         ~MovableGameObject() noexcept override = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
+        void AddForce(const sf::Vector2f &force) noexcept;
+        void InvertVelocity() noexcept;
+        void SetHasGravity(bool value) noexcept { _hasGravity = value; }
+        void SetLinearDrag(float value) noexcept { _linearDrag = value; }
 
     protected:
-        void AddForce(const sf::Vector2f &force);
         bool IsOnFloor() const noexcept { return (_isOnFloor); }
 
     private:
@@ -22,6 +25,7 @@ namespace feg
         sf::Vector2f _linearVelocity;
         float _linearDrag;
         const float _gravity;
+        bool _hasGravity;
         bool _isOnFloor;
     };
 }

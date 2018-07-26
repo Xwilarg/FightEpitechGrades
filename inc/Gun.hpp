@@ -3,28 +3,20 @@
 
 # include <memory>
 # include "Bullet.hpp"
-# include "TextureManager.hpp"
+# include "Chrono.hpp"
 
 namespace feg
 {
     class Gun
     {
     public:
-        Gun(const sf::Texture &texture) noexcept;
+        Gun(const sf::Texture &texture, int reloadTime) noexcept;
         virtual ~Gun() noexcept = default;
-        std::unique_ptr<Bullet> Fire() const noexcept;
+        virtual std::unique_ptr<Bullet> Fire() noexcept = 0;
 
-    private:
+    protected:
         const sf::Texture &_texture;
-    };
-
-    class Handgun final : public Gun
-    {
-    public:
-        Handgun(TextureManager &tm)
-            : Gun(tm.GetTexture("res/WhiteCircle.png"))
-        { }
-        ~Handgun() noexcept = default;
+        Chrono _reloadTime;
     };
 }
 
