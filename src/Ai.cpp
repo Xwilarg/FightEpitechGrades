@@ -6,7 +6,7 @@ namespace feg
         : Character(texture, tm), _target(nullptr)
     { }
 
-    void Ai::Update(const Scene &scene, sf::RenderWindow &window) noexcept
+    void Ai::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {
         Character::Update(scene, window);
         if (_target != nullptr)

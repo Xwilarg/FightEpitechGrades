@@ -4,7 +4,7 @@
 # include <memory>
 # include "GameObject.hpp"
 # include "GameManager.hpp"
-
+#include <iostream>
 namespace feg
 {
     class Scene final
@@ -19,8 +19,8 @@ namespace feg
         template<typename T, typename... Args>
         GameObject *AddGameObject(Args &&... args)
         {
-            _allGameObjects.push_back(std::make_shared<T>(args...));
-            return (_allGameObjects[_allGameObjects.size() - 1].get());
+            _allGameObjects.push_back(std::make_shared<T>(std::forward<Args>(args)...));
+            return (_allGameObjects.back().get());
         }
 
         void PressKey(sf::Keyboard::Key key) noexcept;

@@ -12,7 +12,7 @@ namespace feg
     public:
         Gun(const sf::Texture &texture) noexcept;
         virtual ~Gun() noexcept = default;
-        std::unique_ptr<Bullet> Fire() const noexcept;
+        const sf::Texture &Fire() const noexcept;
 
     private:
         const sf::Texture &_texture;

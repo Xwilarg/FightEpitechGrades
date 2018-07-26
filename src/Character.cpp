@@ -1,4 +1,5 @@
 #include "Character.hpp"
+#include "Scene.hpp"
 
 namespace feg
 {
@@ -9,7 +10,7 @@ namespace feg
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
     }
 
-    void Character::Update(const Scene &scene, sf::RenderWindow &window) noexcept
+    void Character::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {
         MovableGameObject::Update(scene, window);
     }
@@ -28,5 +29,10 @@ namespace feg
     {
         if (IsOnFloor())
             AddForce(sf::Vector2f(0.f, -_jumpForce));
+    }
+
+    void Character::Fire(Scene &scene) const noexcept
+    {
+        //scene.AddGameObject<Bullet>(_weapon.Fire());
     }
 }

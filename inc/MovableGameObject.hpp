@@ -10,7 +10,7 @@ namespace feg
     public:
         MovableGameObject(const sf::Texture &texture) noexcept;
         ~MovableGameObject() noexcept override = default;
-        void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
+        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
 
     protected:
         void AddForce(const sf::Vector2f &force);

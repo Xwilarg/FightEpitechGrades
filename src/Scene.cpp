@@ -9,9 +9,7 @@ namespace feg
     void Scene::Update(sf::RenderWindow &window) noexcept
     {
         for (auto &go : _allGameObjects)
-        {
-            go.get()->Update(*this, window);
-        }
+            go->Update(*this, window);
     }
 
     void Scene::PressKey(sf::Keyboard::Key key) noexcept

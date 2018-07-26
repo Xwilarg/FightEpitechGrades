@@ -31,7 +31,7 @@ int main()
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f))->SetColor(sf::Color(0.f, 0.f, 255.f))->SetScale(sf::Vector2f(1.f, 2.f)))
         ->SetTarget(
     mainScene.AddGameObject<feg::Player>(gm.tm.GetTexture("res/WhiteSquare.png"), gm.tm, feg::Player::PlayerInput(
-        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z))
+        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::Space))
         ->SetPosition(sf::Vector2f(100.f, yWin - 350.f))->SetColor(sf::Color(255.f, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f))
         );
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");

@@ -6,8 +6,8 @@ namespace feg
         : _texture(texture)
     { }
 
-    std::unique_ptr<Bullet> Gun::Fire() const noexcept
+    const sf::Texture &Gun::Fire() const noexcept
     {
-        return (std::make_unique<Bullet>(_texture));
+        return (_texture);
     }
 }

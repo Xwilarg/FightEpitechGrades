@@ -10,7 +10,7 @@ namespace feg
     public:
         Ai(const sf::Texture &texture, TextureManager &tm) noexcept;
         ~Ai() noexcept = default;
-        void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
+        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
         void SetTarget(const GameObject *target) noexcept;
 
     private:

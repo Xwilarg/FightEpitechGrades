@@ -8,7 +8,7 @@ namespace feg
         _myId(id++), _layer(PhysicsManager::PhysicsLayer::NONE)
     { }
 
-    void GameObject::Update(const Scene &scene, sf::RenderWindow &window) noexcept
+    void GameObject::Update(Scene &, sf::RenderWindow &window) noexcept
     {
         window.draw(_sprite);
     }

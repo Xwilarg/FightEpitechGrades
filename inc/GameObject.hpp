@@ -13,7 +13,7 @@ namespace feg
     public:
         GameObject(const sf::Texture &texture) noexcept;
         virtual ~GameObject() noexcept = default;
-        virtual void Update(const Scene &scene, sf::RenderWindow &window) noexcept;
+        virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
         GameObject *SetColor(sf::Color &&color) noexcept;
         GameObject *SetScale(sf::Vector2f &&scale) noexcept;
         GameObject *SetPosition(sf::Vector2f &&size) noexcept;

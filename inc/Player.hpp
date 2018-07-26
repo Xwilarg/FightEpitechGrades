@@ -10,16 +10,17 @@ namespace feg
     public:
         struct PlayerInput
         {
-            PlayerInput(sf::Keyboard::Key left, sf::Keyboard::Key right, sf::Keyboard::Key jump)
-                : _left(left), _right(right), _jump(jump)
+            PlayerInput(sf::Keyboard::Key left, sf::Keyboard::Key right, sf::Keyboard::Key jump, sf::Keyboard::Key fire)
+                : _left(left), _right(right), _jump(jump), _fire(fire)
             { }
 
             sf::Keyboard::Key _left;
             sf::Keyboard::Key _right;
             sf::Keyboard::Key _jump;
+            sf::Keyboard::Key _fire;
         };
         Player(const sf::Texture &texture, TextureManager &tm, const PlayerInput &input) noexcept;
-        void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
+        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
 
     private:
         PlayerInput _input;

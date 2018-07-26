@@ -10,7 +10,7 @@ namespace feg
     public:
         Bullet(const sf::Texture &texture) noexcept;
         ~Bullet() noexcept = default;
-        void Update(const Scene &scene, sf::RenderWindow &window) noexcept;
+        void Update(Scene &scene, sf::RenderWindow &window) noexcept;
     };
 }
 

@@ -8,7 +8,7 @@ namespace feg
         _gravity(1.1f), _isOnFloor(false)
     { }
 
-    void MovableGameObject::Update(const Scene &scene, sf::RenderWindow &window) noexcept
+    void MovableGameObject::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {
         GameObject::Update(scene, window);
         AddForce(sf::Vector2f(0.f, _gravity));

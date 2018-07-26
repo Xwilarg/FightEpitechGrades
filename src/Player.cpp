@@ -7,7 +7,7 @@ namespace feg
         : Character(texture, tm), _input(input)
     { }
 
-    void Player::Update(const Scene &scene, sf::RenderWindow &window) noexcept
+    void Player::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {
         Character::Update(scene, window);
         if (scene.IsPressed(_input._left))
@@ -16,5 +16,7 @@ namespace feg
             GoRight();
         if (scene.IsPressed(_input._jump))
             Jump();
+        if (scene.IsPressed(_input._fire))
+            Fire(scene);
     }
 }

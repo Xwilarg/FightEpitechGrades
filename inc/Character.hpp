@@ -11,12 +11,13 @@ namespace feg
     public:
         Character(const sf::Texture &texture, TextureManager &tm) noexcept;
         ~Character() noexcept = default;
-        void Update(const Scene &scene, sf::RenderWindow &window) noexcept override;
+        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
 
     protected:
         void GoLeft() noexcept;
         void GoRight() noexcept;
         void Jump() noexcept;
+        void Fire(Scene &scene) const noexcept;
 
     private:
         Handgun _weapon;
