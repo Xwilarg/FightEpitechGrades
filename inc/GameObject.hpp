@@ -11,6 +11,11 @@ namespace feg
     class GameObject
     {
     public:
+        enum Tag
+        {
+            NONE,
+            WALL
+        };
         GameObject(const sf::Texture &texture) noexcept;
         virtual ~GameObject() noexcept = default;
         virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
@@ -19,6 +24,7 @@ namespace feg
         GameObject *SetPosition(sf::Vector2f &&size) noexcept;
         GameObject *SetPosition(const sf::Vector2f &size) noexcept;
         GameObject *SetLayer(PhysicsManager::PhysicsLayer layer) noexcept;
+        GameObject *SetTag(Tag tag) noexcept;
         bool operator==(const GameObject &go) const noexcept;
         bool operator!=(const GameObject &go) const noexcept;
 
@@ -33,11 +39,13 @@ namespace feg
         int _myId;
         PhysicsManager::PhysicsLayer _layer;
         static int id;
+        Tag _tag;
 
     public:
         const sf::Vector2f &GetPosition() const noexcept { return (_position); }
         const sf::Vector2f &GetSize() const noexcept { return (_size); }
         PhysicsManager::PhysicsLayer GetLayer() const noexcept { return (_layer); }
+        Tag GetTag() const noexcept { return (_tag); }
     };
 }
 

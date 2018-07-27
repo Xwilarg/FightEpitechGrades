@@ -5,7 +5,7 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(1.1f), _hasGravity(true), _isOnFloor(false)
+        _gravity(1.1f), _hasGravity(true), _isOnFloor(false), _isOnLeftWall(false), _isOnRightWall(false)
     { }
 
     void MovableGameObject::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -15,19 +15,29 @@ namespace feg
             AddForce(sf::Vector2f(0.f, _gravity));
         bool canMoveX = true;
         bool canMoveY = true;
+        bool collideLeftWall = false;
+        bool collideRightWall = false;
         for (const auto &go : scene.GetAllGameObjects())
         {
             if (*go.get() != *this && !scene.DoesLayersCollide(GetLayer(), go.get()->GetLayer()))
             {
-                if (DoesCollide(*go.get()))
+                if (DoesCollide(*go.get(), true, false))
                 {
-                    if (DoesCollide(*go.get(), true, false))
-                        canMoveX = false;
-                    if (DoesCollide(*go.get(), false, true))
-                        canMoveY = false;
+                    canMoveX = false;
+                    if (go->GetTag() == GameObject::WALL)
+                    {
+                        if (_linearVelocity.x < -0.01f)
+                            collideLeftWall = true;
+                        else if (_linearVelocity.x > 0.01f)
+                            collideRightWall = true;
+                    }
                 }
+                if (DoesCollide(*go.get(), false, true))
+                    canMoveY = false;
             }
         }
+        _isOnLeftWall = collideLeftWall;
+        _isOnRightWall = collideRightWall;
         if (canMoveX)
             Translate(sf::Vector2f(_linearVelocity.x, 0.f));
         else

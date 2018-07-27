@@ -29,7 +29,11 @@ namespace feg
 
     void Character::Jump() noexcept
     {
-        if (IsOnFloor())
+        if (IsOnLeftWall())
+            AddForce(sf::Vector2f(_jumpForce, 2.f * -_jumpForce / 3.f));
+        else if (IsOnRightWall())
+            AddForce(sf::Vector2f(-_jumpForce, 2.f * -_jumpForce / 3.f));
+        else if (IsOnFloor())
             AddForce(sf::Vector2f(0.f, -_jumpForce));
     }
 

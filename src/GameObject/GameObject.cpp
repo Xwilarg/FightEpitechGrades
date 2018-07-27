@@ -5,7 +5,8 @@ namespace feg
     GameObject::GameObject(const sf::Texture &texture) noexcept
         : _sprite(texture), _position(sf::Vector2f(0.f, 0.f)),
         _baseSize(sf::Vector2f(50.f, 50.f)), _size(_baseSize),
-        _myId(id++), _layer(PhysicsManager::PhysicsLayer::NONE)
+        _myId(id++), _layer(PhysicsManager::PhysicsLayer::NONE),
+        _tag(NONE)
     { }
 
     void GameObject::Update(Scene &, sf::RenderWindow &window) noexcept
@@ -43,6 +44,12 @@ namespace feg
     GameObject *GameObject::SetLayer(PhysicsManager::PhysicsLayer layer) noexcept
     {
         _layer = layer;
+        return (this);
+    }
+
+    GameObject *GameObject::SetTag(Tag tag) noexcept
+    {
+        _tag = tag;
         return (this);
     }
 

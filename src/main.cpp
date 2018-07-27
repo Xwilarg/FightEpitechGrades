@@ -11,13 +11,13 @@ static feg::GameManager gm;
 void AddWalls(feg::Scene &scene)
 {
     scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
-        ->SetPosition(sf::Vector2f(0.f, yWin))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
+        ->SetPosition(sf::Vector2f(0.f, yWin))->SetScale(sf::Vector2f(xWin / 50.f, 1.f))->SetTag(feg::GameObject::WALL);
     scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
-        ->SetPosition(sf::Vector2f(0.f, -50.f))->SetScale(sf::Vector2f(xWin / 50.f, 1.f));
+        ->SetPosition(sf::Vector2f(0.f, -50.f))->SetScale(sf::Vector2f(xWin / 50.f, 1.f))->SetTag(feg::GameObject::WALL);
     scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
-        ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f));
+        ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f))->SetTag(feg::GameObject::WALL);
     scene.AddGameObject<feg::GameObject>(gm.tm.GetTexture("res/WhiteSquare.png"))
-        ->SetPosition(sf::Vector2f(xWin, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f));
+        ->SetPosition(sf::Vector2f(xWin, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f))->SetTag(feg::GameObject::WALL);
 }
 
 int main()
