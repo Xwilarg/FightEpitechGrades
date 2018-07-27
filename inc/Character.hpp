@@ -24,6 +24,7 @@ namespace feg
         const float _movForce;
         const float _jumpForce;
         bool _isFacingRight;
+        int _health;
     };
 }
 

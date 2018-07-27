@@ -3,7 +3,7 @@
 namespace feg
 {
     Scene::Scene(const GameManager &manager) noexcept
-        : _manager(manager), _allGameObjects(), _toAdd(), _keyPressed()
+        : _manager(manager), _allGameObjects(), _toAdd(), _toRemove(), _keyPressed()
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
@@ -11,8 +11,16 @@ namespace feg
         for (auto &go : _toAdd)
             _allGameObjects.push_back(std::move(go));
         _toAdd.clear();
+        for (auto &go : _toRemove)
+            _allGameObjects.erase(std::remove(_allGameObjects.begin(), _allGameObjects.end(), go), _allGameObjects.end());
+        _toRemove.clear();
         for (auto &go : _allGameObjects)
             go->Update(*this, window);
+    }
+
+    void Scene::RemoveGameObject(std::shared_ptr<GameObject> &&obj) noexcept
+    {
+        _toRemove.push_back(std::move(obj));
     }
 
     void Scene::PressKey(sf::Keyboard::Key key) noexcept

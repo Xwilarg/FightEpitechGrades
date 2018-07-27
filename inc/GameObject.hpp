@@ -14,7 +14,9 @@ namespace feg
         enum Tag
         {
             NONE,
-            WALL
+            WALL,
+            BULLET,
+            PLAYER
         };
         GameObject(const sf::Texture &texture) noexcept;
         virtual ~GameObject() noexcept = default;

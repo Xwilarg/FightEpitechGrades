@@ -28,11 +28,11 @@ int main()
     mainScene.AddGameObject<feg::Crate>(gm.tm.GetTexture("res/WhiteSquare.png"))
         ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(350.f, 0.f));
     dynamic_cast<feg::Ai*>(mainScene.AddGameObject<feg::Ai>(gm.tm.GetTexture("res/WhiteSquare.png"), gm.tm)
-        ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f))->SetColor(sf::Color(0.f, 0.f, 255.f))->SetScale(sf::Vector2f(1.f, 2.f)))
+        ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f))->SetColor(sf::Color(0.f, 0.f, 255.f))->SetScale(sf::Vector2f(1.f, 2.f))->SetTag(feg::GameObject::PLAYER))
         ->SetTarget(
     mainScene.AddGameObject<feg::Player>(gm.tm.GetTexture("res/WhiteSquare.png"), gm.tm, feg::Player::PlayerInput(
         sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::Space))
-        ->SetPosition(sf::Vector2f(100.f, yWin - 350.f))->SetColor(sf::Color(255.f, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f))
+        ->SetPosition(sf::Vector2f(100.f, yWin - 350.f))->SetColor(sf::Color(255.f, 0.f, 0.f))->SetScale(sf::Vector2f(1.f, 2.f))->SetTag(feg::GameObject::PLAYER)
         );
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");
     window.setFramerateLimit(60);

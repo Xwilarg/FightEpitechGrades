@@ -17,18 +17,20 @@ namespace feg
         { return (_allGameObjects); }
 
         template<typename T, typename... Args>
-        GameObject *AddGameObject(Args &&... args)
+        GameObject *AddGameObject(Args &&... args) noexcept
         {
             _toAdd.push_back(std::make_shared<T>(std::forward<Args>(args)...));
             return (_toAdd.back().get());
         }
 
         template<typename T>
-        GameObject *AddGameObject(std::unique_ptr<T> obj)
+        GameObject *AddGameObject(std::unique_ptr<T> &&obj) noexcept
         {
             _toAdd.push_back(std::move(obj));
             return (_toAdd.back().get());
         }
+
+        void RemoveGameObject(std::shared_ptr<GameObject> &&obj) noexcept;
 
         void PressKey(sf::Keyboard::Key key) noexcept;
         void ReleaseKey(sf::Keyboard::Key key) noexcept;
@@ -40,6 +42,7 @@ namespace feg
         const GameManager &_manager;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<std::shared_ptr<GameObject> > _toAdd;
+        std::vector<std::shared_ptr<GameObject> > _toRemove;
         std::vector<sf::Keyboard::Key> _keyPressed;
     };
 }

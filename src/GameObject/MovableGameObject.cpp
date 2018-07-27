@@ -1,5 +1,6 @@
 #include "MovableGameObject.hpp"
 #include "Scene.hpp"
+#include "Character.hpp"
 
 namespace feg
 {
@@ -21,19 +22,29 @@ namespace feg
         {
             if (*go.get() != *this && !scene.DoesLayersCollide(GetLayer(), go.get()->GetLayer()))
             {
-                if (DoesCollide(*go.get(), true, false))
+                if (DoesCollide(*go.get(), true, true))
                 {
-                    canMoveX = false;
-                    if (go->GetTag() == GameObject::WALL)
+                    if (GetTag() == GameObject::BULLET && go->GetTag() == GameObject::PLAYER)
                     {
-                        if (_linearVelocity.x < -0.01f)
-                            collideLeftWall = true;
-                        else if (_linearVelocity.x > 0.01f)
-                            collideRightWall = true;
+                        //scene.RemoveGameObject(this);
                     }
+                    else if (GetTag() == GameObject::PLAYER && go->GetTag() == GameObject::BULLET)
+                    {
+                    }
+                    if (DoesCollide(*go.get(), true, false))
+                    {
+                        canMoveX = false;
+                        if (go->GetTag() == GameObject::WALL)
+                        {
+                            if (_linearVelocity.x < -0.01f)
+                                collideLeftWall = true;
+                            else if (_linearVelocity.x > 0.01f)
+                                collideRightWall = true;
+                        }
+                    }
+                    if (DoesCollide(*go.get(), false, true))
+                        canMoveY = false;
                 }
-                if (DoesCollide(*go.get(), false, true))
-                    canMoveY = false;
             }
         }
         _isOnLeftWall = collideLeftWall;

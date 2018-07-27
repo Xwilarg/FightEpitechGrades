@@ -5,7 +5,8 @@ namespace feg
 {
     Character::Character(const sf::Texture &texture, TextureManager &tm) noexcept
         : MovableGameObject(texture), _weapon(tm),
-        _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false)
+        _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
+        _health(100)
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
     }
