@@ -28,17 +28,21 @@ namespace feg
                     bool collideY = DoesCollide(*go.get(), false, true);
                     if (collideX || (collideY && go->GetPosition().y > GetPosition().y))
                         _canDoubleJump = true;
-                    if (GetTag() == GameObject::BULLET && go->GetTag() == GameObject::PLAYER)
+                    if (GetTag() == GameObject::BULLET)
                     {
-                        //scene.RemoveGameObject(this);
+                        scene.RemoveGameObject(this);
+                        if (go->GetTag() == GameObject::PLAYER)
+                            static_cast<Character*>(go.get())->GetHit(static_cast<Bullet*>(this));
                     }
                     else if (GetTag() == GameObject::PLAYER && go->GetTag() == GameObject::BULLET)
                     {
+                        scene.RemoveGameObject(go.get());
+                        static_cast<Character*>(this)->GetHit(static_cast<Bullet*>(go.get()));
                     }
                     if (collideX)
                     {
                         canMoveX = false;
-                        if (go->GetTag() == GameObject::WALL)
+                        if (go->GetTag() != GameObject::BULLET)
                         {
                             if (_linearVelocity.x < -0.01f)
                                 collideLeftWall = true;

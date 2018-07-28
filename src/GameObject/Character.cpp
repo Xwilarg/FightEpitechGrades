@@ -16,6 +16,9 @@ namespace feg
         MovableGameObject::Update(scene, window);
     }
 
+    void Character::GetHit(Bullet *bullet) noexcept
+    {}
+
     void Character::GoLeft() noexcept
     {
         _isFacingRight = false;

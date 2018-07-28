@@ -18,9 +18,16 @@ namespace feg
             go->Update(*this, window);
     }
 
-    void Scene::RemoveGameObject(std::shared_ptr<GameObject> &&obj) noexcept
+    void Scene::RemoveGameObject(GameObject *obj) noexcept
     {
-        _toRemove.push_back(std::move(obj));
+        for (const auto& o : _allGameObjects)
+        {
+            if (o.get() == obj)
+            {
+                _toRemove.push_back(o);
+                break;
+            }
+        }
     }
 
     void Scene::PressKey(sf::Keyboard::Key key) noexcept

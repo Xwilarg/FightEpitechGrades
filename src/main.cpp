@@ -20,13 +20,21 @@ void AddWalls(feg::Scene &scene)
         ->SetPosition(sf::Vector2f(xWin, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f))->SetTag(feg::GameObject::WALL);
 }
 
+void AddCrates(feg::Scene &scene, sf::Vector2f &&pos, int amount)
+{
+    for (int i = 0; i < amount; i++)
+        scene.AddGameObject<feg::Crate>(gm.tm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(pos.x, pos.y + 75.f * i));
+}
+
 int main()
 {
     gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
     feg::Scene mainScene(gm);
     AddWalls(mainScene);
-    mainScene.AddGameObject<feg::Crate>(gm.tm.GetTexture("res/WhiteSquare.png"))
-        ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(350.f, 0.f));
+    AddCrates(mainScene, sf::Vector2f(300.f, 50.f), 5);
+    AddCrates(mainScene, sf::Vector2f(351.f, 50.f), 7);
+    AddCrates(mainScene, sf::Vector2f(402.f, 50.f), 3);
     dynamic_cast<feg::Ai*>(mainScene.AddGameObject<feg::Ai>(gm.tm.GetTexture("res/WhiteSquare.png"), gm.tm)
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f))->SetColor(sf::Color(0.f, 0.f, 255.f))->SetScale(sf::Vector2f(.5f, 1.f))->SetTag(feg::GameObject::PLAYER))
         ->SetTarget(

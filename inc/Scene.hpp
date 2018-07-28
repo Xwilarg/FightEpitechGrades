@@ -30,7 +30,7 @@ namespace feg
             return (_toAdd.back().get());
         }
 
-        void RemoveGameObject(std::shared_ptr<GameObject> &&obj) noexcept;
+        void RemoveGameObject(GameObject *obj) noexcept;
 
         void PressKey(sf::Keyboard::Key key) noexcept;
         void ReleaseKey(sf::Keyboard::Key key) noexcept;

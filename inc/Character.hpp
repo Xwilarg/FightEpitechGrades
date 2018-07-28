@@ -12,6 +12,7 @@ namespace feg
         Character(const sf::Texture &texture, TextureManager &tm) noexcept;
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
+        void GetHit(Bullet *bullet) noexcept;
 
     protected:
         void GoLeft() noexcept;
