@@ -32,6 +32,7 @@ int main()
     gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
     gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::BULLET, feg::PhysicsManager::PhysicsLayer::BULLET);
     feg::Scene mainScene(gm);
+    feg::Scene &currentScene = mainScene;
     AddWalls(mainScene);
     AddCrates(mainScene, sf::Vector2f(300.f, 50.f), 5);
     AddCrates(mainScene, sf::Vector2f(351.f, 50.f), 7);
@@ -50,15 +51,16 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::KeyPressed)
-                mainScene.PressKey(event.key.code);
+                currentScene.PressKey(event.key.code);
             else if (event.type == sf::Event::KeyReleased)
-                mainScene.ReleaseKey(event.key.code);
+                currentScene.ReleaseKey(event.key.code);
             else if (event.type == sf::Event::Closed)
                 window.close();
         }
+        currentScene.UpdateMousePosition(sf::Mouse::getPosition());
 
         window.clear(sf::Color::White);
-        mainScene.Update(window);
+        currentScene.Update(window);
         window.display();
     }
     return (0);

@@ -17,7 +17,7 @@ CXXFLAGS += -std=c++17
 
 LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-CPPFLAGS = -I ./inc
+CPPFLAGS = -I ./inc -I ./inc/GameObject -I ./inc/GameObject/Gun -I ./inc/GameObject/UI
 
 SRCS	= src/main.cpp \
 		  src/GameObject/Crate.cpp \
@@ -34,7 +34,8 @@ SRCS	= src/main.cpp \
 		  src/Chrono.cpp \
 		  src/Gun/Handgun.cpp \
 		  src/GameObject/HealthBar.cpp \
-		  src/Gun/Machinegun.cpp
+		  src/Gun/Machinegun.cpp \
+		  src/GameObject/UI/ClickableUI.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

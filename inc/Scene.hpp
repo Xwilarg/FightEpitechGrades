@@ -35,8 +35,9 @@ namespace feg
         void PressKey(sf::Keyboard::Key key) noexcept;
         void ReleaseKey(sf::Keyboard::Key key) noexcept;
         bool IsPressed(sf::Keyboard::Key key) const noexcept;
-
         bool DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept;
+        void UpdateMousePosition(const sf::Vector2i &newPos) noexcept;
+        const sf::Vector2i &GetMousePosition() const noexcept;
 
     private:
         const GameManager &_manager;
@@ -44,6 +45,7 @@ namespace feg
         std::vector<std::shared_ptr<GameObject> > _toAdd;
         std::vector<std::shared_ptr<GameObject> > _toRemove;
         std::vector<sf::Keyboard::Key> _keyPressed;
+        sf::Vector2i _mousePos;
     };
 }
 

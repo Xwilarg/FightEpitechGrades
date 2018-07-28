@@ -3,7 +3,8 @@
 namespace feg
 {
     Scene::Scene(const GameManager &manager) noexcept
-        : _manager(manager), _allGameObjects(), _toAdd(), _toRemove(), _keyPressed()
+        : _manager(manager), _allGameObjects(), _toAdd(), _toRemove(),
+        _keyPressed(), _mousePos(sf::Vector2i(0, 0))
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
@@ -50,5 +51,15 @@ namespace feg
     bool Scene::DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept
     {
         return (_manager.pm.DoesLayersCollide(layer1, layer2));
+    }
+
+    void Scene::UpdateMousePosition(const sf::Vector2i &newPos) noexcept
+    {
+        _mousePos = newPos;
+    }
+
+    const sf::Vector2i &Scene::GetMousePosition() const noexcept
+    {
+        return (_mousePos);
     }
 }
