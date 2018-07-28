@@ -51,7 +51,11 @@ namespace feg
                         }
                     }
                     if (collideY)
+                    {
                         canMoveY = false;
+                        if (go->GetPosition().y > GetPosition().y)
+                            SetPosition(sf::Vector2f(GetPosition().x, go->GetPosition().y - go->GetSize().y - .01f));
+                    }
                 }
             }
         }
