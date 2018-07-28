@@ -4,7 +4,7 @@ namespace feg
 {
     Scene::Scene(const GameManager &manager) noexcept
         : _manager(manager), _allGameObjects(), _toAdd(), _toRemove(),
-        _keyPressed(), _mousePos(sf::Vector2i(0, 0))
+        _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false)
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
@@ -61,5 +61,25 @@ namespace feg
     const sf::Vector2i &Scene::GetMousePosition() const noexcept
     {
         return (_mousePos);
+    }
+
+    void Scene::SetMousePressed(bool state) noexcept
+    {
+        _isMousePressed = state;
+    }
+
+    bool Scene::GetMousePressed() const noexcept
+    {
+        return (_isMousePressed);
+    }
+
+    void Scene::SetMouseReleased(bool state) noexcept
+    {
+        _isMouseReleased = state;
+    }
+
+    bool Scene::GetMouseReleased() const noexcept
+    {
+        return (_isMouseReleased);
     }
 }

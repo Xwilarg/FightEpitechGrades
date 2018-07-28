@@ -12,7 +12,7 @@ namespace feg
     class Character : public MovableGameObject
     {
     public:
-        Character(const sf::Texture &texture, TextureManager &tm, Scene &scene) noexcept;
+        Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept;
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
         void GetHit(Scene &scene, Bullet *bullet) noexcept;

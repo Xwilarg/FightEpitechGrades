@@ -3,9 +3,11 @@
 
 namespace feg
 {
-    Player::Player(const sf::Texture &texture, TextureManager &tm, Scene &scene, const PlayerInput &input) noexcept
+    Player::Player(const sf::Texture &texture, ResourcesManager &tm, Scene &scene, const PlayerInput &input) noexcept
         : Character(texture, tm, scene), _input(input)
-    { }
+    {
+        SetColor(sf::Color(255.f, 0.f, 0.f));
+    }
 
     void Player::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {

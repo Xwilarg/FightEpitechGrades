@@ -4,7 +4,7 @@
 # include <memory>
 # include "GameObject.hpp"
 # include "GameManager.hpp"
-#include <iostream>
+
 namespace feg
 {
     class Scene final
@@ -30,6 +30,13 @@ namespace feg
             return (_toAdd.back().get());
         }
 
+        template<typename T>
+        GameObject *AddGameObject(const std::shared_ptr<T> &obj) noexcept
+        {
+            _toAdd.push_back(std::move(obj));
+            return (_toAdd.back().get());
+        }
+
         void RemoveGameObject(GameObject *obj) noexcept;
 
         void PressKey(sf::Keyboard::Key key) noexcept;
@@ -38,6 +45,10 @@ namespace feg
         bool DoesLayersCollide(PhysicsManager::PhysicsLayer layer1, PhysicsManager::PhysicsLayer layer2) const noexcept;
         void UpdateMousePosition(const sf::Vector2i &newPos) noexcept;
         const sf::Vector2i &GetMousePosition() const noexcept;
+        void SetMousePressed(bool state) noexcept;
+        bool GetMousePressed() const noexcept;
+        void SetMouseReleased(bool state) noexcept;
+        bool GetMouseReleased() const noexcept;
 
     private:
         const GameManager &_manager;
@@ -46,6 +57,8 @@ namespace feg
         std::vector<std::shared_ptr<GameObject> > _toRemove;
         std::vector<sf::Keyboard::Key> _keyPressed;
         sf::Vector2i _mousePos;
+        bool _isMousePressed;
+        bool _isMouseReleased;
     };
 }
 

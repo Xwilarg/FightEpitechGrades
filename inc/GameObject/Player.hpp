@@ -20,7 +20,7 @@ namespace feg
             sf::Keyboard::Key _fire1;
             sf::Keyboard::Key _fire2;
         };
-        Player(const sf::Texture &texture, TextureManager &tm, Scene &scene, const PlayerInput &input) noexcept;
+        Player(const sf::Texture &texture, ResourcesManager &tm, Scene &scene, const PlayerInput &input) noexcept;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
 
     private:

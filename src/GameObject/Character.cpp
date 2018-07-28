@@ -4,13 +4,14 @@
 
 namespace feg
 {
-    Character::Character(const sf::Texture &texture, TextureManager &tm, Scene &scene) noexcept
+    Character::Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept
         : MovableGameObject(texture), _weapon1(tm), _weapon2(tm),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
         _health(100), _jumpChrono(200),
         _healthBar(static_cast<HealthBar*>(scene.AddGameObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green)))
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
+        SetScale(sf::Vector2f(.5f, 1.f));
     }
 
     void Character::Update(Scene &scene, sf::RenderWindow &window) noexcept

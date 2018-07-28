@@ -2,7 +2,7 @@
 
 namespace feg
 {
-    Handgun::Handgun(TextureManager &tm)
+    Handgun::Handgun(ResourcesManager &tm)
         : Gun(tm.GetTexture("res/WhiteCircle.png"), 1000, 10, 20, 40.f, .5f, sf::Color::Red, 1.f, false)
     { }
 }

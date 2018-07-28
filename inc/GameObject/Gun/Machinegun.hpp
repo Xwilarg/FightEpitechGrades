@@ -2,14 +2,14 @@
 # define MACHINEGUN_HPP_
 
 # include "Gun.hpp"
-# include "TextureManager.hpp"
+# include "ResourcesManager.hpp"
 
 namespace feg
 {
     class Machinegun final : public Gun
     {
     public:
-        Machinegun(TextureManager &tm);
+        Machinegun(ResourcesManager &tm);
         ~Machinegun() noexcept override = default;
     };
 }

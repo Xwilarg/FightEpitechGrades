@@ -21,7 +21,7 @@ CPPFLAGS = -I ./inc -I ./inc/GameObject -I ./inc/GameObject/Gun -I ./inc/GameObj
 
 SRCS	= src/main.cpp \
 		  src/GameObject/Crate.cpp \
-		  src/TextureManager.cpp \
+		  src/ResourcesManager.cpp \
 		  src/GameObject/GameObject.cpp \
 		  src/GameObject/MovableGameObject.cpp \
 		  src/Scene.cpp \
@@ -35,7 +35,9 @@ SRCS	= src/main.cpp \
 		  src/Gun/Handgun.cpp \
 		  src/GameObject/HealthBar.cpp \
 		  src/Gun/Machinegun.cpp \
-		  src/GameObject/UI/ClickableUI.cpp
+		  src/GameObject/UI/ClickableUI.cpp \
+		  src/GameObject/UI/Switch.cpp \
+		  src/GameObject/UI/Text.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
