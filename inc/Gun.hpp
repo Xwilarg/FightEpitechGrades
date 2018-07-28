@@ -10,13 +10,21 @@ namespace feg
     class Gun
     {
     public:
-        Gun(const sf::Texture &texture, int reloadTime) noexcept;
+        Gun(const sf::Texture &texture, int reloadTime, int recoil, int damage, float speed,
+            float size, const sf::Color &color, float drag, bool haveGravity) noexcept;
         virtual ~Gun() noexcept = default;
-        virtual std::unique_ptr<Bullet> Fire() noexcept = 0;
+        std::unique_ptr<Bullet> Fire() noexcept;
 
     protected:
         const sf::Texture &_texture;
         Chrono _reloadTime;
+        const int _recoil;
+        const int _damage;
+        const float _speed;
+        const float _size;
+        const sf::Color _color;
+        const float _drag;
+        const bool _haveGravity;
     };
 }
 

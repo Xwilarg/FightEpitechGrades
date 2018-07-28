@@ -32,12 +32,12 @@ namespace feg
                     {
                         scene.RemoveGameObject(this);
                         if (go->GetTag() == GameObject::PLAYER)
-                            static_cast<Character*>(go.get())->GetHit(static_cast<Bullet*>(this));
+                            static_cast<Character*>(go.get())->GetHit(scene, static_cast<Bullet*>(this));
                     }
                     else if (GetTag() == GameObject::PLAYER && go->GetTag() == GameObject::BULLET)
                     {
                         scene.RemoveGameObject(go.get());
-                        static_cast<Character*>(this)->GetHit(static_cast<Bullet*>(go.get()));
+                        static_cast<Character*>(this)->GetHit(scene, static_cast<Bullet*>(go.get()));
                     }
                     if (collideX)
                     {

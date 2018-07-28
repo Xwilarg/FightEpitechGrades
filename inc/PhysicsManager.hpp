@@ -12,6 +12,7 @@ namespace feg
         {
             NONE,
             PLAYER,
+            BULLET,
             NOCOLLISION
         };
 

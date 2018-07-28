@@ -2,8 +2,8 @@
 
 namespace feg
 {
-    Ai::Ai(const sf::Texture &texture, TextureManager &tm) noexcept
-        : Character(texture, tm), _target(nullptr)
+    Ai::Ai(const sf::Texture &texture, TextureManager &tm, Scene &scene) noexcept
+        : Character(texture, tm, scene), _target(nullptr)
     { }
 
     void Ai::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -17,6 +17,8 @@ namespace feg
                 GoRight();
         }
         Jump();
+        Fire1(scene);
+        Fire2(scene);
     }
 
     void Ai::SetTarget(const GameObject *target) noexcept

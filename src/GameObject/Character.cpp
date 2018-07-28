@@ -1,12 +1,14 @@
 #include "Character.hpp"
 #include "Scene.hpp"
+#include "HealthBar.hpp"
 
 namespace feg
 {
-    Character::Character(const sf::Texture &texture, TextureManager &tm) noexcept
-        : MovableGameObject(texture), _weapon(tm),
+    Character::Character(const sf::Texture &texture, TextureManager &tm, Scene &scene) noexcept
+        : MovableGameObject(texture), _weapon1(tm), _weapon2(tm),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
-        _health(100), _jumpChrono(200)
+        _health(100), _jumpChrono(200),
+        _healthBar(static_cast<HealthBar*>(scene.AddGameObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green)))
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
     }
@@ -16,8 +18,17 @@ namespace feg
         MovableGameObject::Update(scene, window);
     }
 
-    void Character::GetHit(Bullet *bullet) noexcept
-    {}
+    void Character::GetHit(Scene &scene, Bullet *bullet) noexcept
+    {
+        _health -= bullet->GetDamage();
+        if (_health > 0)
+            _healthBar->SetScale(sf::Vector2f(_health / 100.f, .2f));
+        else
+        {
+            scene.RemoveGameObject(_healthBar);
+            scene.RemoveGameObject(this);
+        }
+    }
 
     void Character::GoLeft() noexcept
     {
@@ -55,9 +66,19 @@ namespace feg
         }
     }
 
-    void Character::Fire(Scene &scene) noexcept
+    void Character::Fire1(Scene &scene) noexcept
     {
-        std::unique_ptr<Bullet> bullet = _weapon.Fire();
+        FireInternal(scene, _weapon1);
+    }
+
+    void Character::Fire2(Scene &scene) noexcept
+    {
+        FireInternal(scene, _weapon2);
+    }
+
+    void Character::FireInternal(Scene &scene, Gun &gun) noexcept
+    {
+        std::unique_ptr<Bullet> bullet = gun.Fire();
         if (bullet == nullptr)
             return;
         sf::Vector2f pos = GetPosition();

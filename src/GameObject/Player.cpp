@@ -3,8 +3,8 @@
 
 namespace feg
 {
-    Player::Player(const sf::Texture &texture, TextureManager &tm, const PlayerInput &input) noexcept
-        : Character(texture, tm), _input(input)
+    Player::Player(const sf::Texture &texture, TextureManager &tm, Scene &scene, const PlayerInput &input) noexcept
+        : Character(texture, tm, scene), _input(input)
     { }
 
     void Player::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -16,7 +16,9 @@ namespace feg
             GoRight();
         if (scene.IsPressed(_input._jump))
             Jump();
-        if (scene.IsPressed(_input._fire))
-            Fire(scene);
+        if (scene.IsPressed(_input._fire1))
+            Fire1(scene);
+        if (scene.IsPressed(_input._fire2))
+            Fire2(scene);
     }
 }

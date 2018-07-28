@@ -11,7 +11,6 @@ namespace feg
     public:
         Handgun(TextureManager &tm);
         ~Handgun() noexcept override = default;
-        std::unique_ptr<Bullet> Fire() noexcept;
     };
 }
 

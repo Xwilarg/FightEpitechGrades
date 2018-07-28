@@ -22,11 +22,13 @@ namespace feg
         virtual ~GameObject() noexcept = default;
         virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
         GameObject *SetColor(sf::Color &&color) noexcept;
+        GameObject *SetColor(const sf::Color &color) noexcept;
         GameObject *SetScale(sf::Vector2f &&scale) noexcept;
         GameObject *SetPosition(sf::Vector2f &&size) noexcept;
         GameObject *SetPosition(const sf::Vector2f &size) noexcept;
         GameObject *SetLayer(PhysicsManager::PhysicsLayer layer) noexcept;
         GameObject *SetTag(Tag tag) noexcept;
+        GameObject *SetParent(GameObject *go) noexcept;
         bool operator==(const GameObject &go) const noexcept;
         bool operator!=(const GameObject &go) const noexcept;
 
@@ -42,6 +44,7 @@ namespace feg
         PhysicsManager::PhysicsLayer _layer;
         static int id;
         Tag _tag;
+        GameObject *_parent;
 
     public:
         const sf::Vector2f &GetPosition() const noexcept { return (_position); }

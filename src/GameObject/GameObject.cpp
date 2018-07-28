@@ -6,17 +6,25 @@ namespace feg
         : _sprite(texture), _position(sf::Vector2f(0.f, 0.f)),
         _baseSize(sf::Vector2f(50.f, 50.f)), _size(_baseSize),
         _myId(id++), _layer(PhysicsManager::PhysicsLayer::NONE),
-        _tag(NONE)
+        _tag(NONE), _parent(nullptr)
     { }
 
     void GameObject::Update(Scene &, sf::RenderWindow &window) noexcept
     {
+        if (_parent != nullptr)
+            SetPosition(_parent->GetPosition());
         window.draw(_sprite);
     }
 
     GameObject *GameObject::SetColor(sf::Color &&color) noexcept
     {
         _sprite.setColor(std::move(color));
+        return (this);
+    }
+
+    GameObject *GameObject::SetColor(const sf::Color &color) noexcept
+    {
+        _sprite.setColor(color);
         return (this);
     }
 
@@ -50,6 +58,12 @@ namespace feg
     GameObject *GameObject::SetTag(Tag tag) noexcept
     {
         _tag = tag;
+        return (this);
+    }
+
+    GameObject *GameObject::SetParent(GameObject *go) noexcept
+    {
+        _parent = go;
         return (this);
     }
 

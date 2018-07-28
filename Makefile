@@ -32,7 +32,9 @@ SRCS	= src/main.cpp \
 		  src/GameObject/Bullet.cpp \
 		  src/Gun/Gun.cpp \
 		  src/Chrono.cpp \
-		  src/Gun/Handgun.cpp
+		  src/Gun/Handgun.cpp \
+		  src/GameObject/HealthBar.cpp \
+		  src/Gun/Machinegun.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

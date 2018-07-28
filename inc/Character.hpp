@@ -3,30 +3,37 @@
 
 # include "MovableGameObject.hpp"
 # include "Handgun.hpp"
+# include "Machinegun.hpp"
 
 namespace feg
 {
+    class HealthBar;
+
     class Character : public MovableGameObject
     {
     public:
-        Character(const sf::Texture &texture, TextureManager &tm) noexcept;
+        Character(const sf::Texture &texture, TextureManager &tm, Scene &scene) noexcept;
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
-        void GetHit(Bullet *bullet) noexcept;
+        void GetHit(Scene &scene, Bullet *bullet) noexcept;
 
     protected:
         void GoLeft() noexcept;
         void GoRight() noexcept;
         void Jump() noexcept;
-        void Fire(Scene &scene) noexcept;
+        void Fire1(Scene &scene) noexcept;
+        void Fire2(Scene &scene) noexcept;
 
     private:
-        Handgun _weapon;
+        void FireInternal(Scene &scene, Gun &gun) noexcept;
+        Handgun _weapon1;
+        Machinegun _weapon2;
         const float _movForce;
         const float _jumpForce;
         bool _isFacingRight;
         int _health;
         Chrono _jumpChrono;
+        HealthBar *_healthBar;
     };
 }
 
