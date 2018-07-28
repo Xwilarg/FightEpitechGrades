@@ -25,6 +25,7 @@ namespace feg
         const float _jumpForce;
         bool _isFacingRight;
         int _health;
+        Chrono _jumpChrono;
     };
 }
 

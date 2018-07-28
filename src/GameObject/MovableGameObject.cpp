@@ -24,6 +24,10 @@ namespace feg
             {
                 if (DoesCollide(*go.get(), true, true))
                 {
+                    bool collideX = DoesCollide(*go.get(), true, false);
+                    bool collideY = DoesCollide(*go.get(), false, true);
+                    if (collideX || (collideY && go->GetPosition().y > GetPosition().y))
+                        _canDoubleJump = true;
                     if (GetTag() == GameObject::BULLET && go->GetTag() == GameObject::PLAYER)
                     {
                         //scene.RemoveGameObject(this);
@@ -31,7 +35,7 @@ namespace feg
                     else if (GetTag() == GameObject::PLAYER && go->GetTag() == GameObject::BULLET)
                     {
                     }
-                    if (DoesCollide(*go.get(), true, false))
+                    if (collideX)
                     {
                         canMoveX = false;
                         if (go->GetTag() == GameObject::WALL)
@@ -42,7 +46,7 @@ namespace feg
                                 collideRightWall = true;
                         }
                     }
-                    if (DoesCollide(*go.get(), false, true))
+                    if (collideY)
                         canMoveY = false;
                 }
             }

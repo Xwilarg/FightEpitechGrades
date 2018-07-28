@@ -6,7 +6,7 @@ namespace feg
     Character::Character(const sf::Texture &texture, TextureManager &tm) noexcept
         : MovableGameObject(texture), _weapon(tm),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
-        _health(100)
+        _health(100), _jumpChrono(200)
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
     }
@@ -31,11 +31,25 @@ namespace feg
     void Character::Jump() noexcept
     {
         if (IsOnLeftWall())
+        {
             AddForce(sf::Vector2f(_jumpForce, 2.f * -_jumpForce / 3.f));
+            _jumpChrono.Reset();
+        }
         else if (IsOnRightWall())
+        {
             AddForce(sf::Vector2f(-_jumpForce, 2.f * -_jumpForce / 3.f));
+            _jumpChrono.Reset();
+        }
         else if (IsOnFloor())
+        {
             AddForce(sf::Vector2f(0.f, -_jumpForce));
+            _jumpChrono.Reset();
+        }
+        else if (_canDoubleJump && _jumpChrono.IsEnded())
+        {
+            _canDoubleJump = false;
+            AddForce(sf::Vector2f(0.f, -_jumpForce / 2.f));
+        }
     }
 
     void Character::Fire(Scene &scene) noexcept

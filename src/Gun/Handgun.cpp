@@ -13,7 +13,10 @@ namespace feg
         _reloadTime.Reset();
         std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>(_texture);
         bullet->SetColor(sf::Color(0.f, 0.f, 0.f))
-              ->SetTag(GameObject::BULLET);
+              ->SetTag(GameObject::BULLET)
+              ->SetScale(sf::Vector2f(.5f, .5f));
+        bullet->SetHasGravity(false);
+        bullet->SetLinearDrag(1.f);
         bullet->AddForce(sf::Vector2f(20.f, 0.f));
         return (bullet);
     }
