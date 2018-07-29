@@ -1,4 +1,5 @@
 #include "Gun.hpp"
+#include "Character.hpp"
 
 namespace feg
 {
@@ -8,12 +9,12 @@ namespace feg
             _size(size), _color(color), _drag(drag), _haveGravity(haveGravity)
     { }
 
-    std::unique_ptr<Bullet> Gun::Fire() noexcept
+    std::unique_ptr<Bullet> Gun::Fire(Character *c) noexcept
     {
         if (!_reloadTime.IsEnded())
             return (nullptr);
         _reloadTime.Reset();
-        std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>(_texture, _damage, _recoil);
+        std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>(_texture, c, _damage, _recoil);
         bullet->SetColor(_color)
               ->SetTag(GameObject::BULLET)
               ->SetScale(sf::Vector2f(_size, _size));

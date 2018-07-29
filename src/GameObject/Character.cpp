@@ -22,6 +22,8 @@ namespace feg
 
     void Character::GetHit(Scene &scene, Bullet *bullet) noexcept
     {
+        if (!bullet->CanAttack(this))
+            return;
         _health -= bullet->GetDamage();
         if (_health > 0)
             _healthBar->SetScale(sf::Vector2f(_health / 100.f, .2f));
@@ -80,7 +82,7 @@ namespace feg
 
     void Character::FireInternal(Scene &scene, Gun &gun) noexcept
     {
-        std::unique_ptr<Bullet> bullet = gun.Fire();
+        std::unique_ptr<Bullet> bullet = gun.Fire(this);
         if (bullet == nullptr)
             return;
         sf::Vector2f pos = GetPosition();

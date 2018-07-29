@@ -7,13 +7,15 @@
 
 namespace feg
 {
+    class Character;
+
     class Gun
     {
     public:
         Gun(const sf::Texture &texture, int reloadTime, int recoil, int damage, float speed,
             float size, const sf::Color &color, float drag, bool haveGravity) noexcept;
         virtual ~Gun() noexcept = default;
-        std::unique_ptr<Bullet> Fire() noexcept;
+        std::unique_ptr<Bullet> Fire(Character *c) noexcept;
 
     protected:
         const sf::Texture &_texture;
