@@ -13,7 +13,7 @@ namespace feg
     {
         if (_parent != nullptr)
             SetPosition(_parent->GetPosition());
-        Draw(window, _sprite);
+        window.draw(_sprite);
     }
 
     GameObject *GameObject::SetColor(sf::Color &&color) noexcept
@@ -81,11 +81,6 @@ namespace feg
     {
         _position += pos;
         _sprite.setPosition(_position);
-    }
-
-    Drawable::Type GameObject::GetType() const noexcept
-    {
-        return (GAMEOBJECT);
     }
 
     int GameObject::id = 0;

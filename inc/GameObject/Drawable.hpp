@@ -5,21 +5,13 @@
 
 namespace feg
 {
+    class Scene;
+
     class Drawable
     {
     public:
         virtual ~Drawable() noexcept = default;
-        template <typename T>
-        void Draw(sf::RenderWindow &window, const T &toDraw)
-        {
-            window.draw(toDraw);
-        }
-        enum Type
-        {
-            GAMEOBJECT,
-            TEXT
-        };
-        virtual Type GetType() const noexcept = 0;
+        virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept = 0;
     };
 }
 

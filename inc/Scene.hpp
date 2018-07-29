@@ -13,28 +13,28 @@ namespace feg
         Scene(const GameManager &manager) noexcept;
         ~Scene() noexcept = default;
         void Update(sf::RenderWindow &window) noexcept;
-        const std::vector<std::shared_ptr<Drawable> > &GetAllObjects() const noexcept
-        { return (_allObjects); }
+        const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
+        { return (_allGameObjects); }
 
         template<typename T, typename... Args>
         T *AddObject(Args &&... args) noexcept
         {
-            _toAdd.push_back(std::make_shared<T>(std::forward<Args>(args)...));
-            return (static_cast<T*>(_toAdd.back().get()));
+            _gameObjectsToAdd.push_back(std::make_shared<T>(std::forward<Args>(args)...));
+            return (static_cast<T*>(_gameObjectsToAdd.back().get()));
         }
 
         template<typename T>
         T *AddObject(std::unique_ptr<T> &&obj) noexcept
         {
-            _toAdd.push_back(std::move(obj));
-            return (static_cast<T*>(_toAdd.back().get()));
+            _gameObjectsToAdd.push_back(std::move(obj));
+            return (static_cast<T*>(_gameObjectsToAdd.back().get()));
         }
 
         template<typename T>
         T *AddObject(const std::shared_ptr<T> &obj) noexcept
         {
-            _toAdd.push_back(std::move(obj));
-            return (static_cast<T*>(_toAdd.back().get()));
+            _gameObjectsToAdd.push_back(std::move(obj));
+            return (static_cast<T*>(_gameObjectsToAdd.back().get()));
         }
 
         void RemoveObject(Drawable *obj) noexcept;
@@ -52,9 +52,9 @@ namespace feg
 
     private:
         const GameManager &_manager;
-        std::vector<std::shared_ptr<Drawable> > _allObjects;
-        std::vector<std::shared_ptr<Drawable> > _toAdd;
-        std::vector<std::shared_ptr<Drawable> > _toRemove;
+        std::vector<std::shared_ptr<GameObject> > _allGameObjects;
+        std::vector<std::shared_ptr<GameObject> > _gameObjectsToAdd;
+        std::vector<std::shared_ptr<GameObject> > _gameObjectsToRemove;
         std::vector<sf::Keyboard::Key> _keyPressed;
         sf::Vector2i _mousePos;
         bool _isMousePressed;

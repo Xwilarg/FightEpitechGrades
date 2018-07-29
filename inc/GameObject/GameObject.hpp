@@ -6,8 +6,6 @@
 
 namespace feg
 {
-    class Scene;
-
     class GameObject : public Drawable
     {
     public:
@@ -20,7 +18,7 @@ namespace feg
         };
         GameObject(const sf::Texture &texture) noexcept;
         ~GameObject() noexcept = default;
-        virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
+        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
         GameObject *SetColor(sf::Color &&color) noexcept;
         GameObject *SetColor(const sf::Color &color) noexcept;
         GameObject *SetScale(sf::Vector2f &&scale) noexcept;
@@ -34,7 +32,6 @@ namespace feg
 
     protected:
         void Translate(const sf::Vector2f &pos) noexcept;
-        Type GetType() const noexcept;
 
     private:
         sf::Sprite _sprite;
