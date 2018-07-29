@@ -16,6 +16,9 @@ namespace feg
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
         void GetHit(Scene &scene, Bullet *bullet) noexcept;
+        void SetOnLeftWall(bool value) noexcept;
+        void SetOnRightWall(bool value) noexcept;
+        void SetCanDoubleJump(bool value) noexcept;
 
     protected:
         void GoLeft() noexcept;
@@ -34,6 +37,8 @@ namespace feg
         int _health;
         Chrono _jumpChrono;
         HealthBar *_healthBar;
+        bool _isOnLeftWall, _isOnRightWall;
+        bool _canDoubleJump;
     };
 }
 

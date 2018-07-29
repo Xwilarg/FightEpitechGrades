@@ -18,9 +18,6 @@ namespace feg
 
     protected:
         bool IsOnFloor() const noexcept { return (_isOnFloor); }
-        bool IsOnLeftWall() const noexcept { return (_isOnLeftWall); }
-        bool IsOnRightWall() const noexcept { return (_isOnRightWall); }
-        bool _canDoubleJump;
 
     private:
         bool DoesCollide(const GameObject &go, bool addXVelocity = true, bool addYVelocity = true);
@@ -30,7 +27,6 @@ namespace feg
         const float _gravity;
         bool _hasGravity;
         bool _isOnFloor;
-        bool _isOnLeftWall, _isOnRightWall;
     };
 }
 

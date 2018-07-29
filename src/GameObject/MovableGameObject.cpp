@@ -6,7 +6,7 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(1.1f), _hasGravity(true), _isOnFloor(false), _isOnLeftWall(false), _isOnRightWall(false)
+        _gravity(1.1f), _hasGravity(true), _isOnFloor(false)
     { }
 
     void MovableGameObject::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -26,8 +26,8 @@ namespace feg
                 {
                     bool collideX = DoesCollide(*go, true, false);
                     bool collideY = DoesCollide(*go, false, true);
-                    if (collideX || (collideY && go->GetPosition().y > GetPosition().y))
-                        _canDoubleJump = true;
+                    if (GetTag() == PLAYER && go->GetTag() != BULLET && (collideX || (collideY && go->GetPosition().y > GetPosition().y)))
+                        static_cast<Character*>(this)->SetCanDoubleJump(true);
                     if (GetTag() == GameObject::BULLET)
                     {
                         scene.RemoveObject(this);
@@ -59,8 +59,11 @@ namespace feg
                 }
             }
         }
-        _isOnLeftWall = collideLeftWall;
-        _isOnRightWall = collideRightWall;
+        if (GetTag() == PLAYER)
+        {
+            static_cast<Character*>(this)->SetOnLeftWall(collideLeftWall);
+            static_cast<Character*>(this)->SetOnRightWall(collideRightWall);
+        }
         if (canMoveX)
             Translate(sf::Vector2f(_linearVelocity.x, 0.f));
         else

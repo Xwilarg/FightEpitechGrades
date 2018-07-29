@@ -8,9 +8,11 @@ namespace feg
         : MovableGameObject(texture), _weapon1(tm), _weapon2(tm),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
         _health(100), _jumpChrono(200),
-        _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green)))
+        _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green))),
+        _isOnLeftWall(false), _isOnRightWall(false), _canDoubleJump(true)
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
+        SetTag(PLAYER);
     }
 
     void Character::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -44,12 +46,12 @@ namespace feg
 
     void Character::Jump() noexcept
     {
-        if (IsOnLeftWall())
+        if (_isOnLeftWall)
         {
             AddForce(sf::Vector2f(_jumpForce, 2.f * -_jumpForce / 3.f));
             _jumpChrono.Reset();
         }
-        else if (IsOnRightWall())
+        else if (_isOnRightWall)
         {
             AddForce(sf::Vector2f(-_jumpForce, 2.f * -_jumpForce / 3.f));
             _jumpChrono.Reset();
@@ -86,5 +88,20 @@ namespace feg
         if (!_isFacingRight)
             bullet->InvertVelocity();
         scene.AddObject(std::move(bullet));
+    }
+
+    void Character::SetOnLeftWall(bool value) noexcept
+    {
+        _isOnLeftWall = value;
+    }
+
+    void Character::SetOnRightWall(bool value) noexcept
+    {
+        _isOnRightWall = value;
+    }
+
+    void Character::SetCanDoubleJump(bool value) noexcept
+    {
+        _canDoubleJump = value;
     }
 }
