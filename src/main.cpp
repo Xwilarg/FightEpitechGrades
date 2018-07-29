@@ -6,6 +6,7 @@
 #include "Ai.hpp"
 #include "Switch.hpp"
 #include "Text.hpp"
+#include "Button.hpp"
 
 constexpr static unsigned int xWin = 1200, yWin = 600;
 static feg::GameManager gm;
@@ -29,6 +30,11 @@ void AddCrates(feg::Scene &scene, sf::Vector2f &&pos, int amount)
             ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(pos.x, pos.y + 75.f * i));
 }
 
+void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign)
+{
+    *currentScene = &toAssign;
+}
+
 int main()
 {
     // PHYSIC LAYERS
@@ -38,7 +44,7 @@ int main()
     // SCENE CREATION
     feg::Scene mainScene(gm);
     feg::Scene mainMenu(gm);
-    feg::Scene &currentScene = mainMenu;
+    feg::Scene *currentScene = &mainMenu;
     AddWalls(mainScene);
     AddWalls(mainMenu);
     AddCrates(mainScene, sf::Vector2f(300.f, 50.f), 5);
@@ -51,8 +57,10 @@ int main()
     static_cast<feg::Ai*>(mainScene.AddObject<feg::Ai>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene)
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f)))
         ->SetTarget(player.get());
-    mainMenu.AddObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
-    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(260.f, 150.f))->SetString("Button")->SetColor(sf::Color::Black);
+   // mainMenu.AddObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
+   // mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(260.f, 150.f))->SetString("Switch")->SetColor(sf::Color::Black);
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene))->SetPosition(sf::Vector2f(1000.f, 525.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1055.f, 530.f))->SetString("Play")->SetColor(sf::Color::Black);
 
     // GAME
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");
@@ -60,25 +68,25 @@ int main()
     while (window.isOpen())
     {
         sf::Event event;
-        currentScene.SetMousePressed(false);
-        currentScene.SetMouseReleased(false);
+        currentScene->SetMousePressed(false);
+        currentScene->SetMouseReleased(false);
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::KeyPressed)
-                currentScene.PressKey(event.key.code);
+                currentScene->PressKey(event.key.code);
             else if (event.type == sf::Event::KeyReleased)
-                currentScene.ReleaseKey(event.key.code);
+                currentScene->ReleaseKey(event.key.code);
             else if (event.type == sf::Event::MouseMoved)
-                currentScene.UpdateMousePosition(sf::Mouse::getPosition());
+                currentScene->UpdateMousePosition(sf::Mouse::getPosition());
             else if (event.type == sf::Event::MouseButtonPressed)
-                currentScene.SetMousePressed(true);
+                currentScene->SetMousePressed(true);
             else if (event.type == sf::Event::MouseButtonReleased)
-                currentScene.SetMouseReleased(true);
+                currentScene->SetMouseReleased(true);
             else if (event.type == sf::Event::Closed)
                 window.close();
         }
         window.clear(sf::Color::White);
-        currentScene.Update(window);
+        currentScene->Update(window);
         window.display();
     }
     return (0);

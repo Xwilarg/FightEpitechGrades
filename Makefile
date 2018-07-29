@@ -37,7 +37,8 @@ SRCS	= src/main.cpp \
 		  src/Gun/Machinegun.cpp \
 		  src/GameObject/UI/ClickableUI.cpp \
 		  src/GameObject/UI/Switch.cpp \
-		  src/GameObject/UI/Text.cpp
+		  src/GameObject/UI/Text.cpp \
+		  src/GameObject/UI/Button.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
