@@ -11,20 +11,20 @@ static feg::GameManager gm;
 
 void AddWalls(feg::Scene &scene)
 {
-    scene.AddGameObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+    scene.AddObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(0.f, yWin))->SetScale(sf::Vector2f(xWin / 50.f, 1.f))->SetTag(feg::GameObject::WALL);
-    scene.AddGameObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+    scene.AddObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(0.f, -50.f))->SetScale(sf::Vector2f(xWin / 50.f, 1.f))->SetTag(feg::GameObject::WALL);
-    scene.AddGameObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+    scene.AddObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f))->SetTag(feg::GameObject::WALL);
-    scene.AddGameObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+    scene.AddObject<feg::GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
         ->SetPosition(sf::Vector2f(xWin, 0.f))->SetScale(sf::Vector2f(1.f, yWin / 50.f))->SetTag(feg::GameObject::WALL);
 }
 
 void AddCrates(feg::Scene &scene, sf::Vector2f &&pos, int amount)
 {
     for (int i = 0; i < amount; i++)
-        scene.AddGameObject<feg::Crate>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        scene.AddObject<feg::Crate>(gm.rm.GetTexture("res/WhiteSquare.png"))
             ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(pos.x, pos.y + 75.f * i));
 }
 
@@ -37,7 +37,7 @@ int main()
     // SCENE CREATION
     feg::Scene mainScene(gm);
     feg::Scene mainMenu(gm);
-    feg::Scene &currentScene = mainMenu;
+    feg::Scene &currentScene = mainScene;
     AddWalls(mainScene);
     AddWalls(mainMenu);
     AddCrates(mainScene, sf::Vector2f(300.f, 50.f), 5);
@@ -45,12 +45,12 @@ int main()
     AddCrates(mainScene, sf::Vector2f(402.f, 50.f), 3);
     std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/WhiteSquare.png"), gm.rm, mainScene, feg::Player::PlayerInput(
         sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::K, sf::Keyboard::L));
-    mainScene.AddGameObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
-    mainMenu.AddGameObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
-    static_cast<feg::Ai*>(mainScene.AddGameObject<feg::Ai>(gm.rm.GetTexture("res/WhiteSquare.png"), gm.rm, mainScene)
-        ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f))->SetColor(sf::Color(0.f, 0.f, 255.f))->SetScale(sf::Vector2f(.5f, 1.f))->SetTag(feg::GameObject::PLAYER))
+    mainScene.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
+    mainMenu.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
+    static_cast<feg::Ai*>(mainScene.AddObject<feg::Ai>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene)
+        ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f)))
         ->SetTarget(player.get());
-    mainMenu.AddGameObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
+    mainMenu.AddObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
 
     // GAME
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");

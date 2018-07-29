@@ -18,26 +18,29 @@ namespace feg
         bool canMoveY = true;
         bool collideLeftWall = false;
         bool collideRightWall = false;
-        for (const auto &go : scene.GetAllGameObjects())
+        for (const auto &obj : scene.GetAllObjects())
         {
-            if (*go.get() != *this && !scene.DoesLayersCollide(GetLayer(), go.get()->GetLayer()))
+            if (obj->GetType() == TEXT)
+                continue;
+            GameObject *go = static_cast<GameObject*>(obj.get());
+            if (*go != *this && !scene.DoesLayersCollide(GetLayer(), go->GetLayer()))
             {
-                if (DoesCollide(*go.get(), true, true))
+                if (DoesCollide(*go, true, true))
                 {
-                    bool collideX = DoesCollide(*go.get(), true, false);
-                    bool collideY = DoesCollide(*go.get(), false, true);
+                    bool collideX = DoesCollide(*go, true, false);
+                    bool collideY = DoesCollide(*go, false, true);
                     if (collideX || (collideY && go->GetPosition().y > GetPosition().y))
                         _canDoubleJump = true;
                     if (GetTag() == GameObject::BULLET)
                     {
-                        scene.RemoveGameObject(this);
+                        scene.RemoveObject(this);
                         if (go->GetTag() == GameObject::PLAYER)
-                            static_cast<Character*>(go.get())->GetHit(scene, static_cast<Bullet*>(this));
+                            static_cast<Character*>(go)->GetHit(scene, static_cast<Bullet*>(this));
                     }
                     else if (GetTag() == GameObject::PLAYER && go->GetTag() == GameObject::BULLET)
                     {
-                        scene.RemoveGameObject(go.get());
-                        static_cast<Character*>(this)->GetHit(scene, static_cast<Bullet*>(go.get()));
+                        scene.RemoveObject(go);
+                        static_cast<Character*>(this)->GetHit(scene, static_cast<Bullet*>(go));
                     }
                     if (collideX)
                     {

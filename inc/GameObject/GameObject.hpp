@@ -1,14 +1,14 @@
 #ifndef GAMEOBJECT_HPP_
 # define GAMEOBJECT_HPP_
 
-# include <SFML/Graphics.hpp>
 # include "PhysicsManager.hpp"
+# include "Drawable.hpp"
 
 namespace feg
 {
     class Scene;
 
-    class GameObject
+    class GameObject : public Drawable
     {
     public:
         enum Tag
@@ -19,7 +19,7 @@ namespace feg
             PLAYER
         };
         GameObject(const sf::Texture &texture) noexcept;
-        virtual ~GameObject() noexcept = default;
+        ~GameObject() noexcept = default;
         virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
         GameObject *SetColor(sf::Color &&color) noexcept;
         GameObject *SetColor(const sf::Color &color) noexcept;
@@ -34,6 +34,7 @@ namespace feg
 
     protected:
         void Translate(const sf::Vector2f &pos) noexcept;
+        Type GetType() const noexcept;
 
     private:
         sf::Sprite _sprite;

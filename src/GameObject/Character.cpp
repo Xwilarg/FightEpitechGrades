@@ -8,10 +8,9 @@ namespace feg
         : MovableGameObject(texture), _weapon1(tm), _weapon2(tm),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
         _health(100), _jumpChrono(200),
-        _healthBar(static_cast<HealthBar*>(scene.AddGameObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green)))
+        _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green)))
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
-        SetScale(sf::Vector2f(.5f, 1.f));
     }
 
     void Character::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -26,8 +25,8 @@ namespace feg
             _healthBar->SetScale(sf::Vector2f(_health / 100.f, .2f));
         else
         {
-            scene.RemoveGameObject(_healthBar);
-            scene.RemoveGameObject(this);
+            scene.RemoveObject(_healthBar);
+            scene.RemoveObject(this);
         }
     }
 
@@ -86,6 +85,6 @@ namespace feg
         bullet->SetPosition(sf::Vector2f(pos.x + ((_isFacingRight) ? (55.f) : (-55.f)), pos.y));
         if (!_isFacingRight)
             bullet->InvertVelocity();
-        scene.AddGameObject<Bullet>(std::move(bullet));
+        scene.AddObject(std::move(bullet));
     }
 }

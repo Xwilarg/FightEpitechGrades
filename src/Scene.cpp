@@ -3,25 +3,25 @@
 namespace feg
 {
     Scene::Scene(const GameManager &manager) noexcept
-        : _manager(manager), _allGameObjects(), _toAdd(), _toRemove(),
+        : _manager(manager), _allObjects(), _toAdd(), _toRemove(),
         _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false)
     { }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
     {
         for (auto &go : _toAdd)
-            _allGameObjects.push_back(std::move(go));
+            _allObjects.push_back(std::move(go));
         _toAdd.clear();
         for (auto &go : _toRemove)
-            _allGameObjects.erase(std::remove(_allGameObjects.begin(), _allGameObjects.end(), go), _allGameObjects.end());
+            _allObjects.erase(std::remove(_allObjects.begin(), _allObjects.end(), go), _allObjects.end());
         _toRemove.clear();
-        for (auto &go : _allGameObjects)
-            go->Update(*this, window);
+        for (auto &go : _allObjects)
+            static_cast<GameObject*>(go.get())->Update(*this, window);
     }
 
-    void Scene::RemoveGameObject(GameObject *obj) noexcept
+    void Scene::RemoveObject(Drawable *obj) noexcept
     {
-        for (const auto& o : _allGameObjects)
+        for (const auto& o : _allObjects)
         {
             if (o.get() == obj)
             {

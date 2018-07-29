@@ -4,9 +4,7 @@ namespace feg
 {
     Ai::Ai(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept
         : Character(texture, tm, scene), _target(nullptr)
-    {
-        SetColor(sf::Color(0.f, 0.f, 255.f));
-    }
+    { }
 
     void Ai::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {
