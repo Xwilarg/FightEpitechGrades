@@ -18,7 +18,7 @@ namespace feg
         };
         GameObject(const sf::Texture &texture) noexcept;
         ~GameObject() noexcept = default;
-        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
+        virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
         GameObject *SetColor(sf::Color &&color) noexcept;
         GameObject *SetColor(const sf::Color &color) noexcept;
         GameObject *SetScale(sf::Vector2f &&scale) noexcept;

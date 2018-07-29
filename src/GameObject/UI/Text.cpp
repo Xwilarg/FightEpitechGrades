@@ -2,15 +2,32 @@
 
 namespace feg
 {
-    Text::Text(const sf::Font &font, std::string &&str) noexcept
+    Text::Text(const sf::Font &font) noexcept
         : _text()
     {
         _text.setFont(font);
-        _text.setString(std::move(str));
     }
 
-    void Text::Update(Scene &, sf::RenderWindow &window) noexcept
+    const sf::Text &Text::GetText() const noexcept
     {
-        window.draw(_text);
+        return (_text);
+    }
+
+    Text *Text::SetPosition(sf::Vector2f &&pos) noexcept
+    {
+        _text.setPosition(std::move(pos));
+        return (this);
+    }
+
+    Text *Text::SetString(std::string &&str) noexcept
+    {
+        _text.setString(std::move(str));
+        return (this);
+    }
+
+    Text *Text::SetColor(const sf::Color &color) noexcept
+    {
+        _text.setFillColor(color);
+        return (this);
     }
 }

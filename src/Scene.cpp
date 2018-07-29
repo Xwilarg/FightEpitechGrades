@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "Text.hpp"
 
 namespace feg
 {
@@ -17,6 +18,14 @@ namespace feg
         _gameObjectsToRemove.clear();
         for (auto &go : _allGameObjects)
             go->Update(*this, window);
+        for (auto &txt : _allText)
+            window.draw(txt->GetText());
+    }
+
+    Text *Scene::AddObject(const sf::Font &font) noexcept
+    {
+        _allText.push_back(std::make_shared<Text>(font));
+        return (_allText.back().get());
     }
 
     void Scene::RemoveObject(Drawable *obj) noexcept

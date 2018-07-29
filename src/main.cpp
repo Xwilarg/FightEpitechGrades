@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "Ai.hpp"
 #include "Switch.hpp"
+#include "Text.hpp"
 
 constexpr static unsigned int xWin = 1200, yWin = 600;
 static feg::GameManager gm;
@@ -37,13 +38,13 @@ int main()
     // SCENE CREATION
     feg::Scene mainScene(gm);
     feg::Scene mainMenu(gm);
-    feg::Scene &currentScene = mainScene;
+    feg::Scene &currentScene = mainMenu;
     AddWalls(mainScene);
     AddWalls(mainMenu);
     AddCrates(mainScene, sf::Vector2f(300.f, 50.f), 5);
     AddCrates(mainScene, sf::Vector2f(351.f, 50.f), 7);
     AddCrates(mainScene, sf::Vector2f(402.f, 50.f), 3);
-    std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/WhiteSquare.png"), gm.rm, mainScene, feg::Player::PlayerInput(
+    std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene, feg::Player::PlayerInput(
         sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::K, sf::Keyboard::L));
     mainScene.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
     mainMenu.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
@@ -51,6 +52,7 @@ int main()
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f)))
         ->SetTarget(player.get());
     mainMenu.AddObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(260.f, 150.f))->SetString("Button")->SetColor(sf::Color::Black);
 
     // GAME
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");

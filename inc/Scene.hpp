@@ -7,6 +7,8 @@
 
 namespace feg
 {
+    class Text;
+
     class Scene final
     {
     public:
@@ -15,6 +17,8 @@ namespace feg
         void Update(sf::RenderWindow &window) noexcept;
         const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
         { return (_allGameObjects); }
+
+        Text *AddObject(const sf::Font &font) noexcept;
 
         template<typename T, typename... Args>
         T *AddObject(Args &&... args) noexcept
@@ -55,6 +59,7 @@ namespace feg
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<std::shared_ptr<GameObject> > _gameObjectsToAdd;
         std::vector<std::shared_ptr<GameObject> > _gameObjectsToRemove;
+        std::vector<std::shared_ptr<Text> > _allText;
         std::vector<sf::Keyboard::Key> _keyPressed;
         sf::Vector2i _mousePos;
         bool _isMousePressed;

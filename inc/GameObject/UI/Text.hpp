@@ -8,9 +8,12 @@ namespace feg
     class Text : public Drawable
     {
     public:
-        Text(const sf::Font &font, std::string &&str) noexcept;
+        Text(const sf::Font &font) noexcept;
         ~Text() noexcept = default;
-        void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
+        const sf::Text &GetText() const noexcept;
+        Text *SetPosition(sf::Vector2f &&pos) noexcept;
+        Text *SetString(std::string &&str) noexcept;
+        Text *SetColor(const sf::Color &color) noexcept;
 
     private:
         sf::Text _text;

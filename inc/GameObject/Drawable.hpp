@@ -11,7 +11,6 @@ namespace feg
     {
     public:
         virtual ~Drawable() noexcept = default;
-        virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept = 0;
     };
 }
 
