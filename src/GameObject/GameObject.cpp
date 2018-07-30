@@ -29,7 +29,7 @@ namespace feg
     }
 
     GameObject *GameObject::SetScale(sf::Vector2f &&scale) noexcept
-    {
+    { // TODO: Errors on collisions when called on Character
         _sprite.setScale(scale);
         _size = sf::Vector2f(_baseSize.x * scale.x, _baseSize.y * scale.y);
         return (this);

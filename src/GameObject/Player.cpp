@@ -22,5 +22,7 @@ namespace feg
             Fire1(scene);
         if (scene.IsPressed(_input._fire2))
             Fire2(scene);
+        if (scene.IsPressed(_input._fall))
+            Fall();
     }
 }

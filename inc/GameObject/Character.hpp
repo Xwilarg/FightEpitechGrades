@@ -26,6 +26,7 @@ namespace feg
         void Jump() noexcept;
         void Fire1(Scene &scene) noexcept;
         void Fire2(Scene &scene) noexcept;
+        void Fall() noexcept;
 
     private:
         void FireInternal(Scene &scene, Gun &gun) noexcept;
@@ -36,6 +37,7 @@ namespace feg
         bool _isFacingRight;
         int _health;
         Chrono _jumpChrono;
+        Chrono _fallChrono;
         HealthBar *_healthBar;
         bool _isOnLeftWall, _isOnRightWall;
         bool _canDoubleJump;

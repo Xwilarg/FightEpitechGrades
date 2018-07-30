@@ -8,7 +8,7 @@
 #include "Text.hpp"
 #include "Button.hpp"
 
-constexpr static unsigned int xWin = 1200, yWin = 600;
+constexpr static unsigned int xWin = 1600, yWin = 900;
 static feg::GameManager gm;
 
 void AddWalls(feg::Scene &scene)
@@ -51,7 +51,7 @@ int main()
     AddCrates(mainScene, sf::Vector2f(351.f, 50.f), 7);
     AddCrates(mainScene, sf::Vector2f(402.f, 50.f), 3);
     std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene, feg::Player::PlayerInput(
-        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::K, sf::Keyboard::L));
+        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::S, sf::Keyboard::K, sf::Keyboard::L));
     mainScene.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
     mainMenu.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
     static_cast<feg::Ai*>(mainScene.AddObject<feg::Ai>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene)
@@ -73,7 +73,12 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::KeyPressed)
-                currentScene->PressKey(event.key.code);
+            {
+                if (event.key.code == sf::Keyboard::Escape)
+                    window.close();
+                else
+                    currentScene->PressKey(event.key.code);
+            }
             else if (event.type == sf::Event::KeyReleased)
                 currentScene->ReleaseKey(event.key.code);
             else if (event.type == sf::Event::MouseMoved)

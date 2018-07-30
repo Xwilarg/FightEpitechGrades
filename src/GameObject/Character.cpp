@@ -7,7 +7,7 @@ namespace feg
     Character::Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept
         : MovableGameObject(texture), _weapon1(tm), _weapon2(tm),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
-        _health(100), _jumpChrono(200),
+        _health(100), _jumpChrono(200), _fallChrono(200),
         _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green))),
         _isOnLeftWall(false), _isOnRightWall(false), _canDoubleJump(true)
     {
@@ -78,6 +78,15 @@ namespace feg
     void Character::Fire2(Scene &scene) noexcept
     {
         FireInternal(scene, _weapon2);
+    }
+
+    void Character::Fall() noexcept
+    {
+        if (_fallChrono.IsEnded())
+        {
+            _fallChrono.Reset();
+            AddForce(sf::Vector2f(0.f, _jumpForce));
+        }
     }
 
     void Character::FireInternal(Scene &scene, Gun &gun) noexcept
