@@ -6,7 +6,7 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(1.1f), _hasGravity(true), _isOnFloor(false)
+        _gravity(1.1f), _hasGravity(true), _isOnFloor(false), _terminalVelocity(50.f)
     { }
 
     void MovableGameObject::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -90,6 +90,14 @@ namespace feg
     void MovableGameObject::AddForce(const sf::Vector2f &force) noexcept
     {
         _linearVelocity += force;
+        if (_linearVelocity.x > _terminalVelocity)
+            _linearVelocity.x = _terminalVelocity;
+        else if (_linearVelocity.x < -_terminalVelocity)
+            _linearVelocity.x = -_terminalVelocity;
+        if (_linearVelocity.y > _terminalVelocity)
+            _linearVelocity.y = _terminalVelocity;
+        else if (_linearVelocity.y < -_terminalVelocity)
+            _linearVelocity.y = -_terminalVelocity;
     }
 
     void MovableGameObject::InvertVelocity() noexcept

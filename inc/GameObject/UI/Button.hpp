@@ -6,7 +6,7 @@
 
 namespace feg
 {
-    class Button : public ClickableUI
+    class Button final : public ClickableUI
     {
     public:
         Button(const sf::Texture &texture) noexcept;

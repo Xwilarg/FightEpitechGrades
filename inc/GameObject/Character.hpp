@@ -4,6 +4,7 @@
 # include "MovableGameObject.hpp"
 # include "Handgun.hpp"
 # include "Machinegun.hpp"
+# include "MineLauncher.hpp"
 
 namespace feg
 {
@@ -31,7 +32,7 @@ namespace feg
     private:
         void FireInternal(Scene &scene, Gun &gun) noexcept;
         Handgun _weapon1;
-        Machinegun _weapon2;
+        MineLauncher _weapon2;
         const float _movForce;
         const float _jumpForce;
         bool _isFacingRight;

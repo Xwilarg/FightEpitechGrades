@@ -1,12 +1,39 @@
+#include <fstream>
 #include "Scene.hpp"
 #include "Text.hpp"
+#include "Crate.hpp"
 
 namespace feg
 {
-    Scene::Scene(const GameManager &manager) noexcept
-        : _manager(manager), _allGameObjects(), _gameObjectsToAdd(), _gameObjectsToRemove(),
+    Scene::Scene(GameManager &manager, std::string &&mapFile, const sf::Vector2f &win) noexcept
+        :  _manager(manager), _allGameObjects(), _gameObjectsToAdd(), _gameObjectsToRemove(),
         _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false)
-    { }
+    {
+        AddWalls(manager, win);
+        std::ifstream file(mapFile, std::ios::in);
+        if (!file)
+            throw std::invalid_argument("Can't open " + mapFile);
+        std::string line;
+        int y = 0;
+        constexpr float offset = 50.f;
+        while (getline(file, line))
+        {
+            for (unsigned int i = 0; i < line.size(); i++)
+            {
+                switch (line[i])
+                {
+                case 'o':
+                    AddCrate(sf::Vector2f(i, y) * offset, manager);
+                    break;
+
+                case 'x':
+                    AddPlateform(sf::Vector2f(i, y) * offset, manager);
+                    break;
+                }
+            }
+            y++;
+        }
+    }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
     {
@@ -90,5 +117,29 @@ namespace feg
     bool Scene::GetMouseReleased() const noexcept
     {
         return (_isMouseReleased);
+    }
+
+    void Scene::AddWalls(GameManager &gm, const sf::Vector2f &win) noexcept
+    {
+        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetPosition(sf::Vector2f(-50.f, win.y))->SetScale(sf::Vector2f(win.x / 50.f + 50.f, 1.f))->SetTag(feg::GameObject::WALL);
+        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetPosition(sf::Vector2f(-50.f, -50.f))->SetScale(sf::Vector2f(win.x / 50.f + 50.f, 1.f))->SetTag(feg::GameObject::WALL);
+        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, win.y / 50.f))->SetTag(feg::GameObject::WALL);
+        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetPosition(sf::Vector2f(win.x, 0.f))->SetScale(sf::Vector2f(1.f, win.y / 50.f))->SetTag(feg::GameObject::WALL);
+    }
+
+    void Scene::AddCrate(sf::Vector2f &&pos, GameManager &gm) noexcept
+    {
+        AddObject<Crate>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(pos.x, pos.y));
+    }
+
+    void Scene::AddPlateform(sf::Vector2f &&pos, GameManager &gm) noexcept
+    {
+        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color::Black)->SetPosition(sf::Vector2f(pos.x, pos.y + 75.f));
     }
 }

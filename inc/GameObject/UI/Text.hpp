@@ -5,7 +5,7 @@
 
 namespace feg
 {
-    class Text : public Drawable
+    class Text final : public Drawable
     {
     public:
         Text(const sf::Font &font) noexcept;

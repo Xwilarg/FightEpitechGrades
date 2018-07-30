@@ -10,7 +10,7 @@ namespace feg
     {
     public:
         Handgun(ResourcesManager &tm);
-        ~Handgun() noexcept override = default;
+        ~Handgun() noexcept = default;
     };
 }
 

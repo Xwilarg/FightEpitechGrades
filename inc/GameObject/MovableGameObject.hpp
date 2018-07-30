@@ -27,6 +27,7 @@ namespace feg
         const float _gravity;
         bool _hasGravity;
         bool _isOnFloor;
+        const float _terminalVelocity;
     };
 }
 

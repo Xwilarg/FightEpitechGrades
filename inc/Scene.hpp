@@ -12,7 +12,7 @@ namespace feg
     class Scene final
     {
     public:
-        Scene(const GameManager &manager) noexcept;
+        Scene(GameManager &manager, std::string &&mapFile, const sf::Vector2f &win) noexcept;
         ~Scene() noexcept = default;
         void Update(sf::RenderWindow &window) noexcept;
         const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
@@ -55,6 +55,9 @@ namespace feg
         bool GetMouseReleased() const noexcept;
 
     private:
+        void AddWalls(GameManager &gm, const sf::Vector2f &win) noexcept;
+        void AddCrate(sf::Vector2f &&pos, GameManager &gm) noexcept;
+        void AddPlateform(sf::Vector2f &&pos, GameManager &gm) noexcept;
         const GameManager &_manager;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<std::shared_ptr<GameObject> > _gameObjectsToAdd;
