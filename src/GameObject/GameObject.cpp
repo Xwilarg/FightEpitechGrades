@@ -4,7 +4,7 @@ namespace feg
 {
     GameObject::GameObject(const sf::Texture &texture) noexcept
         : _sprite(texture), _position(sf::Vector2f(0.f, 0.f)),
-        _baseSize(sf::Vector2f(50.f, 50.f)), _size(_baseSize),
+        _baseSize(_sprite.getTexture()->getSize()), _size(_baseSize),
         _myId(id++), _layer(PhysicsManager::PhysicsLayer::NONE),
         _tag(NONE), _parent(nullptr)
     { }
