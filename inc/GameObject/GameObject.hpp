@@ -15,7 +15,8 @@ namespace feg
             WALL,
             BULLET,
             PLAYER,
-            PROP
+            PROP,
+            PORTAL
         };
         GameObject(const sf::Texture &texture) noexcept;
         ~GameObject() noexcept = default;

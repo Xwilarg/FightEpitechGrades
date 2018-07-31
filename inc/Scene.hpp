@@ -58,6 +58,8 @@ namespace feg
         void AddWalls(GameManager &gm, const sf::Vector2f &win) noexcept;
         void AddCrate(sf::Vector2f &&pos, GameManager &gm) noexcept;
         void AddPlateform(sf::Vector2f &&pos, GameManager &gm) noexcept;
+        void AddPortalEntrance(sf::Vector2f &&pos, GameManager &gm) noexcept;
+        void AddPortalExit(sf::Vector2f &&pos, GameManager &gm) noexcept;
         const GameManager &_manager;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<std::shared_ptr<GameObject> > _gameObjectsToAdd;

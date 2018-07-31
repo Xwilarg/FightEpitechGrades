@@ -2,6 +2,7 @@
 #include "Scene.hpp"
 #include "Text.hpp"
 #include "Crate.hpp"
+#include "Portal.hpp"
 
 namespace feg
 {
@@ -28,6 +29,14 @@ namespace feg
 
                 case 'x':
                     AddPlateform(sf::Vector2f(i, y) * offset, manager);
+                    break;
+
+                case '^':
+                    AddPortalEntrance(sf::Vector2f(i, y) * offset, manager);
+                    break;
+
+                case 'v':
+                    AddPortalExit(sf::Vector2f(i, y) * offset, manager);
                     break;
                 }
             }
@@ -140,6 +149,18 @@ namespace feg
     void Scene::AddPlateform(sf::Vector2f &&pos, GameManager &gm) noexcept
     {
         AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
-            ->SetColor(sf::Color::Black)->SetPosition(sf::Vector2f(pos.x, pos.y + 75.f));
+            ->SetColor(sf::Color::Black)->SetPosition(sf::Vector2f(pos.x, pos.y));
+    }
+
+    void Scene::AddPortalEntrance(sf::Vector2f &&pos, GameManager &gm) noexcept
+    {
+        AddObject<PortalEntrance>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color(0, 0, 255, 127))->SetPosition(sf::Vector2f(pos.x, pos.y));
+    }
+
+    void Scene::AddPortalExit(sf::Vector2f &&pos, GameManager &gm) noexcept
+    {
+        AddObject<PortalExit>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color(255, 165, 0, 127))->SetPosition(sf::Vector2f(pos.x, pos.y));
     }
 }
