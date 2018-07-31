@@ -6,7 +6,7 @@ namespace feg
 {
     MovableGameObject::MovableGameObject(const sf::Texture &texture) noexcept
         : GameObject(texture), _linearVelocity(sf::Vector2f(0.f, 0.f)), _linearDrag(1.1f),
-        _gravity(1.1f), _hasGravity(true), _isOnFloor(false), _terminalVelocity(50.f)
+        _gravity(1.1f), _hasGravity(true), _terminalVelocity(50.f)
     { }
 
     void MovableGameObject::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -42,7 +42,6 @@ namespace feg
                     }
                     if (go->GetTag() == GameObject::PROP)
                         static_cast<MovableGameObject*>(go.get())->AddForce(sf::Vector2f(_linearVelocity.x / 2.f, _linearVelocity.y / 2.f));
-                    go->Collide(this);
                     if (collideX)
                     {
                         canMoveX = false;
@@ -57,8 +56,8 @@ namespace feg
                     if (collideY)
                     {
                         canMoveY = false;
-                        if (go->GetPosition().y > GetPosition().y)
-                            SetPosition(sf::Vector2f(GetPosition().x, go->GetPosition().y - go->GetSize().y - .01f));
+                        if (GetTag() == GameObject::PLAYER && go->GetPosition().y > GetPosition().y)
+                            static_cast<Character*>(this)->SetCanJump(true);
                     }
                 }
             }
@@ -73,16 +72,9 @@ namespace feg
         else
             _linearVelocity = sf::Vector2f(0.f, _linearVelocity.y);
         if (canMoveY)
-        {
             Translate(sf::Vector2f(0.f, _linearVelocity.y));
-            _isOnFloor = false;
-        }
         else
-        {
-            if (_linearVelocity.y > 0.f)
-                _isOnFloor = true;
             _linearVelocity = sf::Vector2f(_linearVelocity.x, 0.f);
-        }
         _linearVelocity /= _linearDrag;
     }
 

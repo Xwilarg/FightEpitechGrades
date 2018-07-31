@@ -8,7 +8,8 @@ namespace feg
     class Ai final : public Character
     {
     public:
-        Ai(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept;
+        Ai(const sf::Texture &texture, ResourcesManager &tm, Scene &scene,
+        std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept;
         ~Ai() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
         void SetTarget(const GameObject *target) noexcept;

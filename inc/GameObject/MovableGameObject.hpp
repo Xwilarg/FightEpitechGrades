@@ -16,9 +16,6 @@ namespace feg
         void SetHasGravity(bool value) noexcept { _hasGravity = value; }
         void SetLinearDrag(float value) noexcept { _linearDrag = value; }
 
-    protected:
-        bool IsOnFloor() const noexcept { return (_isOnFloor); }
-
     private:
         bool DoesCollide(const GameObject &go, bool addXVelocity = true, bool addYVelocity = true);
         bool DoesAxisCollide(float myPosition, float mySize, float otherPosition, float otherSize) const noexcept;
@@ -26,7 +23,6 @@ namespace feg
         float _linearDrag;
         const float _gravity;
         bool _hasGravity;
-        bool _isOnFloor;
         const float _terminalVelocity;
     };
 }

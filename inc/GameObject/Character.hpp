@@ -13,12 +13,14 @@ namespace feg
     class Character : public MovableGameObject
     {
     public:
-        Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept;
+        Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene,
+        std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept;
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
         void GetHit(Scene &scene, Bullet *bullet) noexcept;
         void SetOnLeftWall(bool value) noexcept;
         void SetOnRightWall(bool value) noexcept;
+        void SetCanJump(bool value) noexcept;
         void SetCanDoubleJump(bool value) noexcept;
 
     protected:
@@ -30,9 +32,9 @@ namespace feg
         void Fall() noexcept;
 
     private:
-        void FireInternal(Scene &scene, Gun &gun) noexcept;
-        Handgun _weapon1;
-        MineLauncher _weapon2;
+        void FireInternal(Scene &scene, std::unique_ptr<Gun> &gun) noexcept;
+        std::unique_ptr<Gun> _weapon1;
+        std::unique_ptr<Gun> _weapon2;
         const float _movForce;
         const float _jumpForce;
         bool _isFacingRight;
@@ -41,7 +43,7 @@ namespace feg
         Chrono _fallChrono;
         HealthBar *_healthBar;
         bool _isOnLeftWall, _isOnRightWall;
-        bool _canDoubleJump;
+        bool _canJump, _canDoubleJump;
     };
 }
 

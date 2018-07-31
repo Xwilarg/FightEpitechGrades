@@ -4,12 +4,13 @@
 
 namespace feg
 {
-    Character::Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene) noexcept
-        : MovableGameObject(texture), _weapon1(tm), _weapon2(tm),
+    Character::Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene,
+                        std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept
+        : MovableGameObject(texture), _weapon1(std::move(weapon1)), _weapon2(std::move(weapon2)),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
         _health(100), _jumpChrono(200), _fallChrono(200),
         _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green))),
-        _isOnLeftWall(false), _isOnRightWall(false), _canDoubleJump(true)
+        _isOnLeftWall(false), _isOnRightWall(false), _canJump(false), _canDoubleJump(true)
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
         SetTag(PLAYER);
@@ -58,8 +59,9 @@ namespace feg
             AddForce(sf::Vector2f(-_jumpForce, 2.f * -_jumpForce / 3.f));
             _jumpChrono.Reset();
         }
-        else if (IsOnFloor())
+        else if (_canJump)
         {
+            _canJump = false;
             AddForce(sf::Vector2f(0.f, -_jumpForce));
             _jumpChrono.Reset();
         }
@@ -89,9 +91,9 @@ namespace feg
         }
     }
 
-    void Character::FireInternal(Scene &scene, Gun &gun) noexcept
+    void Character::FireInternal(Scene &scene, std::unique_ptr<Gun> &gun) noexcept
     {
-        std::unique_ptr<Bullet> bullet = gun.Fire(this);
+        std::unique_ptr<Bullet> bullet = gun->Fire(this);
         if (bullet == nullptr)
             return;
         sf::Vector2f pos = GetPosition();
@@ -114,5 +116,10 @@ namespace feg
     void Character::SetCanDoubleJump(bool value) noexcept
     {
         _canDoubleJump = value;
+    }
+
+    void Character::SetCanJump(bool value) noexcept
+    {
+        _canJump = value;
     }
 }

@@ -20,7 +20,6 @@ namespace feg
         GameObject(const sf::Texture &texture) noexcept;
         ~GameObject() noexcept = default;
         virtual void Update(Scene &scene, sf::RenderWindow &window) noexcept;
-        virtual void Collide(GameObject *) noexcept { }
         GameObject *SetColor(sf::Color &&color) noexcept;
         GameObject *SetColor(const sf::Color &color) noexcept;
         GameObject *SetScale(sf::Vector2f &&scale) noexcept;

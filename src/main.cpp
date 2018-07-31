@@ -7,6 +7,9 @@
 #include "Switch.hpp"
 #include "Text.hpp"
 #include "Button.hpp"
+#include "Handgun.hpp"
+#include "Machinegun.hpp"
+#include "MineLauncher.hpp"
 
 void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign)
 {
@@ -27,10 +30,12 @@ int main()
     feg::Scene mainMenu(gm, "res/empty.map", sf::Vector2f(xWin, yWin));
     feg::Scene *currentScene = &mainMenu;
     std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene, feg::Player::PlayerInput(
-        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::S, sf::Keyboard::K, sf::Keyboard::L));
+        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::S, sf::Keyboard::K, sf::Keyboard::L),
+        std::make_unique<feg::Handgun>(gm.rm), std::make_unique<feg::MineLauncher>(gm.rm));
     mainScene.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
     mainMenu.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
-    static_cast<feg::Ai*>(mainScene.AddObject<feg::Ai>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene)
+    static_cast<feg::Ai*>(mainScene.AddObject<feg::Ai>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene,
+        std::make_unique<feg::Handgun>(gm.rm), std::make_unique<feg::Machinegun>(gm.rm))
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f)))
         ->SetTarget(player.get());
    // mainMenu.AddObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
