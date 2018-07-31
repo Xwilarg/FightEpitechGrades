@@ -14,18 +14,23 @@ namespace feg
         Portal(const sf::Texture &texture) noexcept;
     };
 
-    class PortalEntrance final : public Portal
-    {
-    public:
-        PortalEntrance(const sf::Texture &texture) noexcept;
-        ~PortalEntrance() noexcept = default;
-    };
-
     class PortalExit final : public Portal
     {
     public:
         PortalExit(const sf::Texture &texture) noexcept;
         ~PortalExit() noexcept = default;
+    };
+
+    class PortalEntrance final : public Portal
+    {
+    public:
+        PortalEntrance(const sf::Texture &texture) noexcept;
+        ~PortalEntrance() noexcept = default;
+        PortalEntrance *SetExit(PortalExit *exit) noexcept;
+        const PortalExit *GetExit() const noexcept;
+
+    private:
+        PortalExit *_exit;
     };
 }
 

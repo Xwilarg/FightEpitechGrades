@@ -51,12 +51,12 @@ namespace feg
     {
         if (_isOnLeftWall)
         {
-            AddForce(sf::Vector2f(_jumpForce, 2.f * -_jumpForce / 3.f));
+            AddForce(sf::Vector2f(2.f * _jumpForce / 3.f, 2.f * -_jumpForce / 5.f));
             _jumpChrono.Reset();
         }
         else if (_isOnRightWall)
         {
-            AddForce(sf::Vector2f(-_jumpForce, 2.f * -_jumpForce / 3.f));
+            AddForce(sf::Vector2f(2.f * -_jumpForce / 3.f, 2.f * -_jumpForce / 5.f));
             _jumpChrono.Reset();
         }
         else if (_canJump)

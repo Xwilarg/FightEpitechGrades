@@ -6,5 +6,6 @@ namespace feg
         : MovableGameObject(texture)
     {
         SetTag(GameObject::PROP);
+        SetScale(sf::Vector2f(.9f, .9f));
     }
 }

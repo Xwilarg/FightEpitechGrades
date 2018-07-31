@@ -27,7 +27,7 @@ int main()
     
     // SCENE CREATION
     feg::Scene mainScene(gm, "res/001.map", sf::Vector2f(xWin, yWin));
-    feg::Scene mainMenu(gm, "res/empty.map", sf::Vector2f(xWin, yWin));
+    feg::Scene mainMenu(gm, "res/menu.map", sf::Vector2f(xWin, yWin));
     feg::Scene *currentScene = &mainMenu;
     std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene, feg::Player::PlayerInput(
         sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::S, sf::Keyboard::K, sf::Keyboard::L),

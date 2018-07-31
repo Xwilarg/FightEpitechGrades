@@ -2,11 +2,10 @@
 #include "Scene.hpp"
 #include "Text.hpp"
 #include "Crate.hpp"
-#include "Portal.hpp"
 
 namespace feg
 {
-    Scene::Scene(GameManager &manager, std::string &&mapFile, const sf::Vector2f &win) noexcept
+    Scene::Scene(GameManager &manager, std::string &&mapFile, const sf::Vector2f &win)
         :  _manager(manager), _allGameObjects(), _gameObjectsToAdd(), _gameObjectsToRemove(),
         _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false)
     {
@@ -17,6 +16,7 @@ namespace feg
         std::string line;
         int y = 0;
         constexpr float offset = 50.f;
+        std::vector<PortalExit*> exits;
         while (getline(file, line))
         {
             for (unsigned int i = 0; i < line.size(); i++)
@@ -32,11 +32,18 @@ namespace feg
                     break;
 
                 case '^':
-                    AddPortalEntrance(sf::Vector2f(i, y) * offset, manager);
+                {
+                    PortalEntrance *entrance = AddPortalEntrance(sf::Vector2f(i, y) * offset, manager);
+                    if (exits.size() > 0)
+                    {
+                        entrance->SetExit(exits[0]);
+                        exits.erase(exits.begin());
+                    }
                     break;
+                }
 
                 case 'v':
-                    AddPortalExit(sf::Vector2f(i, y) * offset, manager);
+                    exits.push_back(AddPortalExit(sf::Vector2f(i, y) * offset, manager));
                     break;
                 }
             }
@@ -152,15 +159,15 @@ namespace feg
             ->SetColor(sf::Color::Black)->SetPosition(sf::Vector2f(pos.x, pos.y));
     }
 
-    void Scene::AddPortalEntrance(sf::Vector2f &&pos, GameManager &gm) noexcept
+    PortalEntrance *Scene::AddPortalEntrance(sf::Vector2f &&pos, GameManager &gm) noexcept
     {
-        AddObject<PortalEntrance>(gm.rm.GetTexture("res/WhiteSquare.png"))
-            ->SetColor(sf::Color(0, 0, 255, 127))->SetPosition(sf::Vector2f(pos.x, pos.y));
+        return (static_cast<PortalEntrance*>(AddObject<PortalEntrance>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color(0, 0, 255, 127))->SetPosition(sf::Vector2f(pos.x, pos.y))));
     }
 
-    void Scene::AddPortalExit(sf::Vector2f &&pos, GameManager &gm) noexcept
+    PortalExit *Scene::AddPortalExit(sf::Vector2f &&pos, GameManager &gm) noexcept
     {
-        AddObject<PortalExit>(gm.rm.GetTexture("res/WhiteSquare.png"))
-            ->SetColor(sf::Color(255, 165, 0, 127))->SetPosition(sf::Vector2f(pos.x, pos.y));
+        return (static_cast<PortalExit*>(AddObject<PortalExit>(gm.rm.GetTexture("res/WhiteSquare.png"))
+            ->SetColor(sf::Color(255, 165, 0, 127))->SetPosition(sf::Vector2f(pos.x, pos.y))));
     }
 }

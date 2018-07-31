@@ -7,9 +7,20 @@ namespace feg
     { }
 
     PortalEntrance::PortalEntrance(const sf::Texture &texture) noexcept
-        : Portal(texture)
+        : Portal(texture), _exit(nullptr)
     {
         SetTag(PORTAL);
+    }
+
+    PortalEntrance *PortalEntrance::SetExit(PortalExit *exit) noexcept
+    {
+        _exit = exit;
+        return (this);
+    }
+
+    const PortalExit *PortalEntrance::GetExit() const noexcept
+    {
+        return (_exit);
     }
 
     PortalExit::PortalExit(const sf::Texture &texture) noexcept

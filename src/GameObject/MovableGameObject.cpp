@@ -26,6 +26,12 @@ namespace feg
                 {
                     bool collideX = DoesCollide(*go, true, false);
                     bool collideY = DoesCollide(*go, false, true);
+                    if (go->GetTag() == GameObject::PORTAL)
+                    {
+                        if (static_cast<PortalEntrance*>(go.get())->GetExit() != nullptr)
+                            SetPosition(static_cast<PortalEntrance*>(go.get())->GetExit()->GetPosition());
+                        continue;
+                    }
                     if (GetTag() == PLAYER && go->GetTag() != BULLET && (collideX || (collideY && go->GetPosition().y > GetPosition().y)))
                         static_cast<Character*>(this)->SetCanDoubleJump(true);
                     if (GetTag() == GameObject::BULLET)
@@ -41,7 +47,7 @@ namespace feg
                             static_cast<Character*>(this)->GetHit(scene, static_cast<Bullet*>(go.get()));
                     }
                     if (go->GetTag() == GameObject::PROP)
-                        static_cast<MovableGameObject*>(go.get())->AddForce(sf::Vector2f(_linearVelocity.x / 2.f, _linearVelocity.y / 2.f));
+                        static_cast<MovableGameObject*>(go.get())->AddForce(sf::Vector2f(_linearVelocity.x / 2.f, 0.f));
                     if (collideX)
                     {
                         canMoveX = false;
