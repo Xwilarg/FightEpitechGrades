@@ -38,12 +38,11 @@ namespace feg
                     {
                         scene.RemoveObject(go.get());
                         if (GetTag() == GameObject::PLAYER)
-                        {
-                            scene.RemoveObject(go.get());
                             static_cast<Character*>(this)->GetHit(scene, static_cast<Bullet*>(go.get()));
-                        }
-                        continue;
                     }
+                    if (go->GetTag() == GameObject::PROP)
+                        static_cast<MovableGameObject*>(go.get())->AddForce(sf::Vector2f(_linearVelocity.x / 2.f, _linearVelocity.y / 2.f));
+                    go->Collide(this);
                     if (collideX)
                     {
                         canMoveX = false;
