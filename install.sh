@@ -16,7 +16,6 @@ apt-get install libsfml-dev
 
 if [ ! -e /usr/share/cmake/Modules/FindSFML.cmake ]; then
     echo "\n\nCopying FindSFML.cmake\n"
-    set "curr=%cd%"
     mkdir /usr/share/cmake/Modules
     cd /usr/share/cmake/Modules
     wget https://files.zirk.eu/SFML/FindSFML.cmake
