@@ -1,4 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
+SET(CMAKE_MODULE_PATH "/usr/share/cmake/Modules")
 project(Fight_Epitech_Grades)
 include_directories(
         inc/
