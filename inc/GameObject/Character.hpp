@@ -13,7 +13,7 @@ namespace feg
     class Character : public MovableGameObject
     {
     public:
-        Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene,
+        Character(const sf::Texture &textureLeft, const sf::Texture &textureRight, ResourcesManager &tm, Scene &scene,
         std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept;
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
@@ -44,6 +44,7 @@ namespace feg
         HealthBar *_healthBar;
         bool _isOnLeftWall, _isOnRightWall;
         bool _canJump, _canDoubleJump;
+        const sf::Texture &_textureLeft, _textureRight;
     };
 }
 

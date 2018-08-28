@@ -67,6 +67,12 @@ namespace feg
         return (this);
     }
 
+    GameObject *GameObject::SetTexture(const sf::Texture &texture) noexcept
+    {
+        _sprite.setTexture(texture);
+        return (this);
+    }
+
     bool GameObject::operator==(const GameObject &go) const noexcept
     {
         return (_myId == go._myId);

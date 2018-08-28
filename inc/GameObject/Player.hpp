@@ -22,7 +22,7 @@ namespace feg
             sf::Keyboard::Key _fire2;
             sf::Keyboard::Key _fall;
         };
-        Player(const sf::Texture &texture, ResourcesManager &tm, Scene &scene, const PlayerInput &input,
+        Player(const sf::Texture &textureLeft, const sf::Texture &textureRight, ResourcesManager &tm, Scene &scene, const PlayerInput &input,
         std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
 

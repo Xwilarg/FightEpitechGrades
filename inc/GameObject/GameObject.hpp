@@ -29,6 +29,7 @@ namespace feg
         GameObject *SetLayer(PhysicsManager::PhysicsLayer layer) noexcept;
         GameObject *SetTag(Tag tag) noexcept;
         GameObject *SetParent(GameObject *go) noexcept;
+        GameObject *SetTexture(const sf::Texture &texture) noexcept;
         bool operator==(const GameObject &go) const noexcept;
         bool operator!=(const GameObject &go) const noexcept;
 

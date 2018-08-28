@@ -2,9 +2,9 @@
 
 namespace feg
 {
-    Ai::Ai(const sf::Texture &texture, ResourcesManager &tm, Scene &scene,
+    Ai::Ai(const sf::Texture &textureLeft, const sf::Texture &textureRight, ResourcesManager &tm, Scene &scene,
     std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept
-        : Character(texture, tm, scene, std::move(weapon1), std::move(weapon2)), _target(nullptr)
+        : Character(textureLeft, textureRight, tm, scene, std::move(weapon1), std::move(weapon2)), _target(nullptr)
     { }
 
     void Ai::Update(Scene &scene, sf::RenderWindow &window) noexcept

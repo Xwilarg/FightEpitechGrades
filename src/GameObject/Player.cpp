@@ -3,12 +3,10 @@
 
 namespace feg
 {
-    Player::Player(const sf::Texture &texture, ResourcesManager &tm, Scene &scene, const PlayerInput &input,
+    Player::Player(const sf::Texture &textureLeft, const sf::Texture &textureRight, ResourcesManager &tm, Scene &scene, const PlayerInput &input,
     std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept
-        : Character(texture, tm, scene, std::move(weapon1), std::move(weapon2)), _input(input)
-    {
-        SetColor(sf::Color(255.f, 0.f, 0.f));
-    }
+        : Character(textureLeft, textureRight, tm, scene, std::move(weapon1), std::move(weapon2)), _input(input)
+    { }
 
     void Player::Update(Scene &scene, sf::RenderWindow &window) noexcept
     {

@@ -4,16 +4,18 @@
 
 namespace feg
 {
-    Character::Character(const sf::Texture &texture, ResourcesManager &tm, Scene &scene,
+    Character::Character(const sf::Texture &textureLeft, const sf::Texture &textureRight, ResourcesManager &tm, Scene &scene,
                         std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept
-        : MovableGameObject(texture), _weapon1(std::move(weapon1)), _weapon2(std::move(weapon2)),
+        : MovableGameObject(textureLeft), _weapon1(std::move(weapon1)), _weapon2(std::move(weapon2)),
         _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
         _health(100), _jumpChrono(200), _fallChrono(200),
         _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green))),
-        _isOnLeftWall(false), _isOnRightWall(false), _canJump(false), _canDoubleJump(true)
+        _isOnLeftWall(false), _isOnRightWall(false), _canJump(false), _canDoubleJump(true),
+        _textureLeft(textureLeft), _textureRight(textureRight)
     {
         SetLayer(PhysicsManager::PhysicsLayer::PLAYER);
         SetTag(PLAYER);
+        SetScale(sf::Vector2f(1.4f, 1.4f));
     }
 
     void Character::Update(Scene &scene, sf::RenderWindow &window) noexcept
@@ -37,13 +39,21 @@ namespace feg
 
     void Character::GoLeft() noexcept
     {
-        _isFacingRight = false;
+        if (_isFacingRight)
+        {
+            _isFacingRight = false;
+            SetTexture(_textureLeft);
+        }
         AddForce(sf::Vector2f(-_movForce, 0.f));
     }
 
     void Character::GoRight() noexcept
     {
-        _isFacingRight = true;
+        if (!_isFacingRight)
+        {
+            _isFacingRight = true;
+            SetTexture(_textureRight);
+        }
         AddForce(sf::Vector2f(_movForce, 0.f));
     }
 
