@@ -7,7 +7,7 @@ namespace feg
     Character::Character(const sf::Texture &textureLeft, const sf::Texture &textureRight, ResourcesManager &tm, Scene &scene,
                         std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept
         : MovableGameObject(textureLeft), _weapon1(std::move(weapon1)), _weapon2(std::move(weapon2)),
-        _movForce(1.2f), _jumpForce(50.f), _isFacingRight(false),
+        _movForce(1.1f), _jumpForce(40.f), _isFacingRight(false),
         _health(100), _jumpChrono(200), _fallChrono(200),
         _healthBar(static_cast<HealthBar*>(scene.AddObject(std::make_unique<HealthBar>(tm.GetTexture("res/WhiteSquare.png")))->SetParent(this)->SetColor(sf::Color::Green))),
         _isOnLeftWall(false), _isOnRightWall(false), _canJump(false), _canDoubleJump(true),
@@ -61,12 +61,12 @@ namespace feg
     {
         if (_isOnLeftWall)
         {
-            AddForce(sf::Vector2f(2.f * _jumpForce / 3.f, 2.f * -_jumpForce / 5.f));
+            AddForce(sf::Vector2f(2.5f * _jumpForce / 3.f, 2.f * -_jumpForce / 4.5f));
             _jumpChrono.Reset();
         }
         else if (_isOnRightWall)
         {
-            AddForce(sf::Vector2f(2.f * -_jumpForce / 3.f, 2.f * -_jumpForce / 5.f));
+            AddForce(sf::Vector2f(2.5f * -_jumpForce / 3.f, 2.f * -_jumpForce / 4.5f));
             _jumpChrono.Reset();
         }
         else if (_canJump)
@@ -78,7 +78,7 @@ namespace feg
         else if (_canDoubleJump && _jumpChrono.IsEnded())
         {
             _canDoubleJump = false;
-            AddForce(sf::Vector2f(0.f, -_jumpForce / 2.f));
+            AddForce(sf::Vector2f(0.f, -_jumpForce / 1.2f));
         }
     }
 
