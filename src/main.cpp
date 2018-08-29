@@ -92,7 +92,7 @@ int main()
             else if (event.type == sf::Event::KeyReleased)
                 currentScene->ReleaseKey(event.key.code);
             else if (event.type == sf::Event::MouseMoved)
-                currentScene->UpdateMousePosition(sf::Mouse::getPosition());
+                currentScene->UpdateMousePosition(sf::Mouse::getPosition(window));
             else if (event.type == sf::Event::MouseButtonPressed)
                 currentScene->SetMousePressed(true);
             else if (event.type == sf::Event::MouseButtonReleased)

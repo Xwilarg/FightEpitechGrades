@@ -51,7 +51,7 @@ namespace feg
                     if (collideX)
                     {
                         canMoveX = false;
-                        if (go->GetTag() != GameObject::BULLET)
+                        if (go->GetTag() != GameObject::BULLET && go->GetTag() != GameObject::PROP)
                         {
                             if (_linearVelocity.x < -0.01f)
                                 collideLeftWall = true;
