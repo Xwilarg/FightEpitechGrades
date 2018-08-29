@@ -68,13 +68,13 @@ int main()
     feg::FileLister maps("./res/maps");
     feg::Text *mapText = mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1000.f, 200.f))->SetColor(sf::Color::Black)->SetSize(15);
     UpdateFileLister(maps, mapText);
-    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadPreviousFileLister, maps, mapText))->SetPosition(sf::Vector2f(1000.f, 225.f));
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadPreviousFileLister, std::ref(maps), mapText))->SetPosition(sf::Vector2f(1000.f, 225.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1015.f, 230.f))->SetString("<")->SetColor(sf::Color::Black);
-    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadNextFileLister, maps, mapText))->SetPosition(sf::Vector2f(1055.f, 225.f));
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadNextFileLister, std::ref(maps), mapText))->SetPosition(sf::Vector2f(1055.f, 225.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1070.f, 230.f))->SetString(">")->SetColor(sf::Color::Black);
 
     // Play button
-    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene, maps))->SetPosition(sf::Vector2f(1000.f, 525.f));
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene, std::cref(maps)))->SetPosition(sf::Vector2f(1000.f, 525.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1055.f, 530.f))->SetString("Play")->SetColor(sf::Color::Black);
 
     // Grades selection
