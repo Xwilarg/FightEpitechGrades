@@ -19,7 +19,6 @@ namespace feg
 
     private:
         std::vector<std::string> _files;
-        std::string *_current;
         unsigned int _index;
         const std::string _folderName;
     };
