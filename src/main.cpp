@@ -12,8 +12,9 @@
 #include "MineLauncher.hpp"
 #include "FileLister.hpp"
 
-void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign) noexcept
+void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign, const feg::FileLister &fl) noexcept
 {
+    toAssign.LoadFromFile(*fl.GetCurrent());
     *currentScene = &toAssign;
 }
 
@@ -43,16 +44,17 @@ int main()
     constexpr unsigned int xWin = 1600, yWin = 900;
     feg::GameManager gm;
 
-    // PHYSIC LAYERS
+    /// PHYSIC LAYERS
     gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
     gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::BULLET, feg::PhysicsManager::PhysicsLayer::BULLET);
     
-    // SCENE CREATION
-    feg::Scene mainScene(gm, "res/001.map", sf::Vector2f(xWin, yWin));
-    feg::Scene mainMenu(gm, "res/menu.map", sf::Vector2f(xWin, yWin));
+    /// SCENE CREATION
+    feg::Scene mainScene(gm, sf::Vector2f(xWin, yWin));
+    feg::Scene mainMenu(gm, sf::Vector2f(xWin, yWin));
+    mainMenu.LoadFromFile("res/menu.map");
     feg::Scene *currentScene = &mainMenu;
     std::shared_ptr<feg::Player> player = std::make_shared<feg::Player>(gm.rm.GetTexture("res/Hana-left.png"), gm.rm.GetTexture("res/Hana-right.png"), gm.rm, mainScene, feg::Player::PlayerInput(
-        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::S, sf::Keyboard::K, sf::Keyboard::L),
+        sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::Z, sf::Keyboard::S, sf::Keyboard::K, sf::Keyboard::L), // Left, right, up, down, fire1, fire2
         std::make_unique<feg::Handgun>(gm.rm), std::make_unique<feg::MineLauncher>(gm.rm));
     mainScene.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
     mainMenu.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
@@ -61,10 +63,22 @@ int main()
         ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f)))
         ->SetTarget(player.get());
 
-    // MENU CREATION
-    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene))->SetPosition(sf::Vector2f(1000.f, 525.f));
+    /// MENU CREATION
+    // Map selection
+    feg::FileLister maps("./res/maps");
+    feg::Text *mapText = mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1000.f, 200.f))->SetColor(sf::Color::Black)->SetSize(15);
+    UpdateFileLister(maps, mapText);
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadPreviousFileLister, maps, mapText))->SetPosition(sf::Vector2f(1000.f, 225.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1015.f, 230.f))->SetString("<")->SetColor(sf::Color::Black);
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadNextFileLister, maps, mapText))->SetPosition(sf::Vector2f(1055.f, 225.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1070.f, 230.f))->SetString(">")->SetColor(sf::Color::Black);
+
+    // Play button
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene, maps))->SetPosition(sf::Vector2f(1000.f, 525.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1055.f, 530.f))->SetString("Play")->SetColor(sf::Color::Black);
-    feg::FileLister files;
+
+    // Grades selection
+    feg::FileLister files("./Grades");
     feg::Text *fileText = mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1000.f, 300.f))->SetColor(sf::Color::Black)->SetSize(15);
     UpdateFileLister(files, fileText);
     mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadPreviousFileLister, files, fileText))->SetPosition(sf::Vector2f(1000.f, 325.f));

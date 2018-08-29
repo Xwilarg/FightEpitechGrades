@@ -13,7 +13,7 @@ namespace feg
     class Scene final
     {
     public:
-        Scene(GameManager &manager, std::string &&mapFile, const sf::Vector2f &win);
+        Scene(GameManager &manager, const sf::Vector2f &win) noexcept;
         ~Scene() noexcept = default;
         void Update(sf::RenderWindow &window) noexcept;
         const std::vector<std::shared_ptr<GameObject> > &GetAllGameObjects() const noexcept
@@ -54,14 +54,16 @@ namespace feg
         bool GetMousePressed() const noexcept;
         void SetMouseReleased(bool state) noexcept;
         bool GetMouseReleased() const noexcept;
+        void LoadFromFile(const std::string &mapFile);
+        void Clear() noexcept;
 
     private:
-        void AddWalls(GameManager &gm, const sf::Vector2f &win) noexcept;
-        void AddCrate(sf::Vector2f &&pos, GameManager &gm) noexcept;
-        void AddPlateform(sf::Vector2f &&pos, GameManager &gm) noexcept;
-        PortalEntrance *AddPortalEntrance(sf::Vector2f &&pos, GameManager &gm) noexcept;
-        PortalExit *AddPortalExit(sf::Vector2f &&pos, GameManager &gm) noexcept;
-        const GameManager &_manager;
+        void AddWalls(const sf::Vector2f &win) noexcept;
+        void AddCrate(sf::Vector2f &&pos) noexcept;
+        void AddPlateform(sf::Vector2f &&pos) noexcept;
+        PortalEntrance *AddPortalEntrance(sf::Vector2f &&pos) noexcept;
+        PortalExit *AddPortalExit(sf::Vector2f &&pos) noexcept;
+        GameManager &_manager;
         std::vector<std::shared_ptr<GameObject> > _allGameObjects;
         std::vector<std::shared_ptr<GameObject> > _gameObjectsToAdd;
         std::vector<std::shared_ptr<GameObject> > _gameObjectsToRemove;

@@ -10,7 +10,7 @@ namespace feg
     class FileLister final
     {
     public:
-        FileLister() noexcept;
+        FileLister(std::string &&folderName) noexcept;
         ~FileLister() noexcept = default;
         void Update();
         void Next() noexcept;
@@ -21,6 +21,7 @@ namespace feg
         std::vector<std::string> _files;
         std::string *_current;
         unsigned int _index;
+        const std::string _folderName;
     };
 }
 

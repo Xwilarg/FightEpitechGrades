@@ -5,50 +5,11 @@
 
 namespace feg
 {
-    Scene::Scene(GameManager &manager, std::string &&mapFile, const sf::Vector2f &win)
+    Scene::Scene(GameManager &manager, const sf::Vector2f &win) noexcept
         :  _manager(manager), _allGameObjects(), _gameObjectsToAdd(), _gameObjectsToRemove(),
         _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false)
     {
-        AddWalls(manager, win);
-        std::ifstream file(mapFile, std::ios::in);
-        if (!file)
-            throw std::invalid_argument("Can't open " + mapFile);
-        std::string line;
-        int y = 0;
-        constexpr float offset = 50.f;
-        std::vector<PortalExit*> exits;
-        while (getline(file, line))
-        {
-            for (unsigned int i = 0; i < line.size(); i++)
-            {
-                switch (line[i])
-                {
-                case 'o':
-                    AddCrate(sf::Vector2f(i, y) * offset, manager);
-                    break;
-
-                case 'x':
-                    AddPlateform(sf::Vector2f(i, y) * offset, manager);
-                    break;
-
-                case '^':
-                {
-                    PortalEntrance *entrance = AddPortalEntrance(sf::Vector2f(i, y) * offset, manager);
-                    if (exits.size() > 0)
-                    {
-                        entrance->SetExit(exits[0]);
-                        exits.erase(exits.begin());
-                    }
-                    break;
-                }
-
-                case 'v':
-                    exits.push_back(AddPortalExit(sf::Vector2f(i, y) * offset, manager));
-                    break;
-                }
-            }
-            y++;
-        }
+        AddWalls(win);
     }
 
     void Scene::Update(sf::RenderWindow &window) noexcept
@@ -135,39 +96,90 @@ namespace feg
         return (_isMouseReleased);
     }
 
-    void Scene::AddWalls(GameManager &gm, const sf::Vector2f &win) noexcept
+    void Scene::LoadFromFile(const std::string &mapFile)
     {
-        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        std::ifstream file(mapFile, std::ios::in);
+        if (!file)
+            throw std::invalid_argument("Can't open " + mapFile);
+        std::string line;
+        int y = 0;
+        constexpr float offset = 50.f;
+        std::vector<PortalExit*> exits;
+        while (getline(file, line))
+        {
+            for (unsigned int i = 0; i < line.size(); i++)
+            {
+                switch (line[i])
+                {
+                case 'o':
+                    AddCrate(sf::Vector2f(i, y) * offset);
+                    break;
+
+                case 'x':
+                    AddPlateform(sf::Vector2f(i, y) * offset);
+                    break;
+
+                case '^':
+                {
+                    PortalEntrance *entrance = AddPortalEntrance(sf::Vector2f(i, y) * offset);
+                    if (exits.size() > 0)
+                    {
+                        entrance->SetExit(exits[0]);
+                        exits.erase(exits.begin());
+                    }
+                    break;
+                }
+
+                case 'v':
+                    exits.push_back(AddPortalExit(sf::Vector2f(i, y) * offset));
+                    break;
+                }
+            }
+            y++;
+        }
+    }
+
+    void Scene::Clear() noexcept
+    {
+        _allGameObjects.clear();
+        _gameObjectsToAdd.clear();
+        _gameObjectsToRemove.clear();
+        _allText.clear();
+    }
+
+    void Scene::AddWalls(const sf::Vector2f &win) noexcept
+    {
+        AddObject<GameObject>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetPosition(sf::Vector2f(-50.f, win.y))->SetScale(sf::Vector2f(win.x / 50.f + 50.f, 1.f))->SetTag(feg::GameObject::WALL);
-        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        AddObject<GameObject>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetPosition(sf::Vector2f(-50.f, -50.f))->SetScale(sf::Vector2f(win.x / 50.f + 50.f, 1.f))->SetTag(feg::GameObject::WALL);
-        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        AddObject<GameObject>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetPosition(sf::Vector2f(-50.f, 0.f))->SetScale(sf::Vector2f(1.f, win.y / 50.f))->SetTag(feg::GameObject::WALL);
-        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        AddObject<GameObject>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetPosition(sf::Vector2f(win.x, 0.f))->SetScale(sf::Vector2f(1.f, win.y / 50.f))->SetTag(feg::GameObject::WALL);
     }
 
-    void Scene::AddCrate(sf::Vector2f &&pos, GameManager &gm) noexcept
+    void Scene::AddCrate(sf::Vector2f &&pos) noexcept
     {
-        AddObject<Crate>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        AddObject<Crate>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetColor(sf::Color(139, 69, 19))->SetPosition(sf::Vector2f(pos.x, pos.y));
     }
 
-    void Scene::AddPlateform(sf::Vector2f &&pos, GameManager &gm) noexcept
+    void Scene::AddPlateform(sf::Vector2f &&pos) noexcept
     {
-        AddObject<GameObject>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        AddObject<GameObject>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetColor(sf::Color::Black)->SetPosition(sf::Vector2f(pos.x, pos.y));
     }
 
-    PortalEntrance *Scene::AddPortalEntrance(sf::Vector2f &&pos, GameManager &gm) noexcept
+    PortalEntrance *Scene::AddPortalEntrance(sf::Vector2f &&pos) noexcept
     {
-        return (static_cast<PortalEntrance*>(AddObject<PortalEntrance>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        return (static_cast<PortalEntrance*>(AddObject<PortalEntrance>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetColor(sf::Color(0, 0, 255, 127))->SetPosition(sf::Vector2f(pos.x, pos.y))));
     }
 
-    PortalExit *Scene::AddPortalExit(sf::Vector2f &&pos, GameManager &gm) noexcept
+    PortalExit *Scene::AddPortalExit(sf::Vector2f &&pos) noexcept
     {
-        return (static_cast<PortalExit*>(AddObject<PortalExit>(gm.rm.GetTexture("res/WhiteSquare.png"))
+        return (static_cast<PortalExit*>(AddObject<PortalExit>(_manager.rm.GetTexture("res/WhiteSquare.png"))
             ->SetColor(sf::Color(255, 165, 0, 127))->SetPosition(sf::Vector2f(pos.x, pos.y))));
     }
 }

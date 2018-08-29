@@ -7,7 +7,7 @@ include_directories(
         inc/GameObject/
         inc/GameObject/Gun/
         inc/GameObject/UI/)
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -Wextra -Wshadow -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wsign-conversion -Wlogical-op -Wuseless-cast")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wshadow -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wsign-conversion -Wlogical-op -Wuseless-cast")
 add_executable(feg.out
         src/main.cpp
 		src/GameObject/Crate.cpp

@@ -2,8 +2,8 @@
 
 namespace feg
 {
-    FileLister::FileLister() noexcept
-        : _files(), _current(nullptr), _index(0)
+    FileLister::FileLister(std::string &&folderName) noexcept
+        : _files(), _current(nullptr), _index(0), _folderName(std::move(folderName))
     {
         Update();
     }
@@ -11,9 +11,9 @@ namespace feg
     void FileLister::Update()
     {
         _files.clear();
-        for (const auto &s : std::experimental::filesystem::directory_iterator("./Grades"))
+        for (const auto &s : std::experimental::filesystem::directory_iterator(_folderName))
         {
-            if (s.path() != "./Grades/README.txt")
+            if (s.path().filename() != "README.md")
                 _files.push_back(s.path());
         }
         _index = 0;
