@@ -10,10 +10,32 @@
 #include "Handgun.hpp"
 #include "Machinegun.hpp"
 #include "MineLauncher.hpp"
+#include "FileLister.hpp"
 
-void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign)
+void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign) noexcept
 {
     *currentScene = &toAssign;
+}
+
+void UpdateFileLister(feg::FileLister &fl, feg::Text *text)
+{
+    const std::string *str = fl.GetCurrent();
+    if (str == nullptr)
+        text->SetString("None");
+    else
+        text->SetString(*str);
+}
+
+void LoadNextFileLister(feg::FileLister &fl, feg::Text *text)
+{
+    fl.Next();
+    UpdateFileLister(fl, text);
+}
+
+void LoadPreviousFileLister(feg::FileLister &fl, feg::Text *text)
+{
+    fl.Previous();
+    UpdateFileLister(fl, text);
 }
 
 int main()
@@ -40,10 +62,15 @@ int main()
         ->SetTarget(player.get());
 
     // MENU CREATION
-   // mainMenu.AddObject<feg::Switch>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetPosition(sf::Vector2f(200.f, 150.f));
-   // mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(260.f, 150.f))->SetString("Switch")->SetColor(sf::Color::Black);
     mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene))->SetPosition(sf::Vector2f(1000.f, 525.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1055.f, 530.f))->SetString("Play")->SetColor(sf::Color::Black);
+    feg::FileLister files;
+    feg::Text *fileText = mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1000.f, 300.f))->SetColor(sf::Color::Black)->SetSize(15);
+    UpdateFileLister(files, fileText);
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadPreviousFileLister, files, fileText))->SetPosition(sf::Vector2f(1000.f, 325.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1015.f, 330.f))->SetString("<")->SetColor(sf::Color::Black);
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadNextFileLister, files, fileText))->SetPosition(sf::Vector2f(1055.f, 325.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1070.f, 330.f))->SetString(">")->SetColor(sf::Color::Black);
 
     // GAME
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");

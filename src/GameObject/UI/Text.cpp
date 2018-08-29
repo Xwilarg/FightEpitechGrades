@@ -25,9 +25,21 @@ namespace feg
         return (this);
     }
 
+    Text *Text::SetString(const std::string &str) noexcept
+    {
+        _text.setString(str);
+        return (this);
+    }
+
     Text *Text::SetColor(const sf::Color &color) noexcept
     {
         _text.setFillColor(color);
+        return (this);
+    }
+
+    Text *Text::SetSize(unsigned int size) noexcept
+    {
+        _text.setCharacterSize(size);
         return (this);
     }
 }

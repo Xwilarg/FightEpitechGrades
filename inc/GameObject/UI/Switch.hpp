@@ -17,4 +17,4 @@ namespace feg
     };
 }
 
-#endif // !SWITCH
+#endif // !SWITCH_HPP_

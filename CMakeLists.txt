@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 SET(CMAKE_MODULE_PATH "/usr/share/cmake/Modules")
 project(Fight_Epitech_Grades)
+set(CMAKE_CXX_STANDARD 17)
 include_directories(
         inc/
         inc/GameObject/
@@ -29,6 +30,8 @@ add_executable(feg.out
 		src/GameObject/UI/Text.cpp
 		src/GameObject/UI/Button.cpp
 		src/Gun/MineLauncher.cpp
-		src/GameObject/Portal.cpp)
+		src/GameObject/Portal.cpp
+		src/FileLister.cpp)
+target_link_libraries(feg.out stdc++fs)
 find_package(SFML 2.4 REQUIRED system window graphics)
 target_link_libraries(feg.out ${SFML_LIBRARIES})
