@@ -1,4 +1,5 @@
 #include "Ai.hpp"
+#include "Scene.hpp"
 
 namespace feg
 {
@@ -12,7 +13,7 @@ namespace feg
         Character::Update(scene, window);
         if (_target != nullptr)
         {
-            if (_target->GetPosition().x < GetPosition().x)
+            if (_target->get()->GetPosition().x < GetPosition().x)
                 GoLeft();
             else
                 GoRight();
@@ -22,8 +23,17 @@ namespace feg
         Fire2(scene);
     }
 
-    void Ai::SetTarget(const GameObject *target) noexcept
+    void Ai::SetTarget(const std::shared_ptr<Player> *target) noexcept
     {
         _target = target;
+    }
+
+
+    bool Ai::GetHit(Scene &scene, Bullet *bullet) noexcept
+    {
+        bool isAlive = Character::GetHit(scene, bullet);
+        if (!isAlive)
+            scene.SpawnAi(*_target);
+        return (isAlive);
     }
 }

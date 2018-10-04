@@ -144,10 +144,15 @@ namespace feg
     void Scene::LoadGrades(const MarkFile &marks, const std::shared_ptr<feg::Player> &target) noexcept
     {
         _marks = &marks;
+        SpawnAi(target);
+    }
+
+    void Scene::SpawnAi(const std::shared_ptr<feg::Player> &target) noexcept
+    {
         static_cast<feg::Ai*>(AddObject<feg::Ai>(_manager.rm.GetTexture("res/Epichan-left.png"), _manager.rm.GetTexture("res/Epichan-right.png"), _manager.rm, *this,
         std::make_unique<feg::Handgun>(_manager.rm), std::make_unique<feg::Machinegun>(_manager.rm))
         ->SetPosition(sf::Vector2f(_manager._xWin - 100.f, _manager._yWin - 350.f)))
-        ->SetTarget(target.get());
+        ->SetTarget(&target);
     }
 
     void Scene::Clear() noexcept

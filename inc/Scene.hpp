@@ -57,6 +57,7 @@ namespace feg
         bool GetMouseReleased() const noexcept;
         void LoadFromFile(const std::string &mapFile);
         void LoadGrades(const MarkFile &marks, const std::shared_ptr<feg::Player> &target) noexcept;
+        void SpawnAi(const std::shared_ptr<feg::Player> &target) noexcept;
         void Clear() noexcept;
 
     private:

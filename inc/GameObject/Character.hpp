@@ -17,7 +17,7 @@ namespace feg
         std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept;
         ~Character() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
-        void GetHit(Scene &scene, Bullet *bullet) noexcept;
+        virtual bool GetHit(Scene &scene, Bullet *bullet) noexcept;
         void SetOnLeftWall(bool value) noexcept;
         void SetOnRightWall(bool value) noexcept;
         void SetCanJump(bool value) noexcept;

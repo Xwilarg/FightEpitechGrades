@@ -23,18 +23,19 @@ namespace feg
         MovableGameObject::Update(scene, window);
     }
 
-    void Character::GetHit(Scene &scene, Bullet *bullet) noexcept
+    bool Character::GetHit(Scene &scene, Bullet *bullet) noexcept
     {
         if (!bullet->CanAttack(this))
-            return;
+            return (true);
         _health -= bullet->GetDamage();
         if (_health > 0)
-            _healthBar->SetScale(sf::Vector2f(_health / 100.f, .2f));
-        else
         {
-            scene.RemoveObject(_healthBar);
-            scene.RemoveObject(this);
+            _healthBar->SetScale(sf::Vector2f(_health / 100.f, .2f));
+            return (true);
         }
+        scene.RemoveObject(_healthBar);
+        scene.RemoveObject(this);
+        return (false);
     }
 
     void Character::GoLeft() noexcept

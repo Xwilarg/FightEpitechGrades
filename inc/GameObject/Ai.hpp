@@ -1,7 +1,8 @@
 #ifndef AI_HPP_
 # define AI_HPP_
 
-# include  "Character.hpp"
+# include "Character.hpp"
+# include "Player.hpp"
 
 namespace feg
 {
@@ -12,10 +13,11 @@ namespace feg
         std::unique_ptr<Gun> &&weapon1, std::unique_ptr<Gun> &&weapon2) noexcept;
         ~Ai() noexcept = default;
         void Update(Scene &scene, sf::RenderWindow &window) noexcept override;
-        void SetTarget(const GameObject *target) noexcept;
+        void SetTarget(const std::shared_ptr<Player> *target) noexcept;
+        bool GetHit(Scene &scene, Bullet *bullet) noexcept override;
 
     private:
-        const GameObject *_target;
+        const std::shared_ptr<Player> *_target;
     };
 }
 
