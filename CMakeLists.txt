@@ -6,7 +6,8 @@ include_directories(
         inc/
         inc/GameObject/
         inc/GameObject/Gun/
-        inc/GameObject/UI/)
+        inc/GameObject/UI/
+		inc/Exception/)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wshadow -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wsign-conversion -Wlogical-op -Wuseless-cast")
 add_executable(feg.out
         src/main.cpp
@@ -31,7 +32,9 @@ add_executable(feg.out
 		src/GameObject/UI/Button.cpp
 		src/Gun/MineLauncher.cpp
 		src/GameObject/Portal.cpp
-		src/FileLister.cpp)
+		src/FileLister.cpp
+		src/MarkFile.cpp
+		src/Exception/ParsingError.cpp)
 target_link_libraries(feg.out stdc++fs)
 find_package(SFML 2.4 REQUIRED system window graphics)
 target_link_libraries(feg.out ${SFML_LIBRARIES})

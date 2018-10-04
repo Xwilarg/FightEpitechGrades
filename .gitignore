@@ -1,5 +1,6 @@
 # Folder containing grades
-Grades/
+Grades/*
+!Grades/README.md
 
 # Emacs
 *~

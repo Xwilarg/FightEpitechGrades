@@ -2,12 +2,14 @@
 #include "Scene.hpp"
 #include "Text.hpp"
 #include "Crate.hpp"
+#include "Ai.hpp"
 
 namespace feg
 {
     Scene::Scene(GameManager &manager, const sf::Vector2f &win) noexcept
         :  _manager(manager), _allGameObjects(), _gameObjectsToAdd(), _gameObjectsToRemove(),
-        _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false)
+        _keyPressed(), _mousePos(sf::Vector2i(0, 0)), _isMousePressed(false), _isMouseReleased(false),
+        _marks(nullptr)
     {
         AddWalls(win);
     }
@@ -137,6 +139,15 @@ namespace feg
             }
             y++;
         }
+    }
+
+    void Scene::LoadGrades(const MarkFile &marks, const std::shared_ptr<feg::Player> &target) noexcept
+    {
+        _marks = &marks;
+        static_cast<feg::Ai*>(AddObject<feg::Ai>(_manager.rm.GetTexture("res/Epichan-left.png"), _manager.rm.GetTexture("res/Epichan-right.png"), _manager.rm, *this,
+        std::make_unique<feg::Handgun>(_manager.rm), std::make_unique<feg::Machinegun>(_manager.rm))
+        ->SetPosition(sf::Vector2f(_manager._xWin - 100.f, _manager._yWin - 350.f)))
+        ->SetTarget(target.get());
     }
 
     void Scene::Clear() noexcept

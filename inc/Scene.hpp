@@ -2,9 +2,10 @@
 # define SCENE_HPP_
 
 # include <memory>
-# include "GameObject.hpp"
+# include "Player.hpp"
 # include "GameManager.hpp"
 # include "Portal.hpp"
+# include "MarkFile.hpp"
 
 namespace feg
 {
@@ -55,6 +56,7 @@ namespace feg
         void SetMouseReleased(bool state) noexcept;
         bool GetMouseReleased() const noexcept;
         void LoadFromFile(const std::string &mapFile);
+        void LoadGrades(const MarkFile &marks, const std::shared_ptr<feg::Player> &target) noexcept;
         void Clear() noexcept;
 
     private:
@@ -72,6 +74,7 @@ namespace feg
         sf::Vector2i _mousePos;
         bool _isMousePressed;
         bool _isMouseReleased;
+        const MarkFile *_marks;
     };
 }
 

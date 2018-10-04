@@ -12,9 +12,11 @@
 #include "MineLauncher.hpp"
 #include "FileLister.hpp"
 
-void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign, const feg::FileLister &fl) noexcept
+void LoadGames(feg::Scene **currentScene, feg::Scene &toAssign, const feg::FileLister &mapFl, const feg::FileLister &gradesFl,
+const std::shared_ptr<feg::Player> &player) noexcept
 {
-    toAssign.LoadFromFile(*fl.GetCurrent());
+    toAssign.LoadFromFile(*mapFl.GetCurrent());
+    toAssign.LoadGrades(*gradesFl.GetCurrent(), player);
     *currentScene = &toAssign;
 }
 
@@ -42,7 +44,7 @@ void LoadPreviousFileLister(feg::FileLister &fl, feg::Text *text)
 int main()
 {
     constexpr unsigned int xWin = 1600, yWin = 900;
-    feg::GameManager gm;
+    feg::GameManager gm(xWin, yWin);
 
     /// PHYSIC LAYERS
     gm.pm.AddLayer(feg::PhysicsManager::PhysicsLayer::PLAYER, feg::PhysicsManager::PhysicsLayer::PLAYER);
@@ -58,10 +60,6 @@ int main()
         std::make_unique<feg::Handgun>(gm.rm), std::make_unique<feg::MineLauncher>(gm.rm));
     mainScene.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
     mainMenu.AddObject(player)->SetPosition(sf::Vector2f(100.f, yWin - 350.f));
-    static_cast<feg::Ai*>(mainScene.AddObject<feg::Ai>(gm.rm.GetTexture("res/Epichan-left.png"), gm.rm.GetTexture("res/Epichan-right.png"), gm.rm, mainScene,
-        std::make_unique<feg::Handgun>(gm.rm), std::make_unique<feg::Machinegun>(gm.rm))
-        ->SetPosition(sf::Vector2f(xWin - 100.f, yWin - 350.f)))
-        ->SetTarget(player.get());
 
     /// MENU CREATION
     // Map selection
@@ -73,10 +71,6 @@ int main()
     mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadNextFileLister, std::ref(maps), mapText))->SetPosition(sf::Vector2f(1055.f, 225.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1070.f, 230.f))->SetString(">")->SetColor(sf::Color::Black);
 
-    // Play button
-    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene, std::cref(maps)))->SetPosition(sf::Vector2f(1000.f, 525.f));
-    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1055.f, 530.f))->SetString("Play")->SetColor(sf::Color::Black);
-
     // Grades selection
     feg::FileLister files("./Grades");
     feg::Text *fileText = mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1000.f, 300.f))->SetColor(sf::Color::Black)->SetSize(15);
@@ -85,6 +79,11 @@ int main()
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1015.f, 330.f))->SetString("<")->SetColor(sf::Color::Black);
     mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadNextFileLister, files, fileText))->SetPosition(sf::Vector2f(1055.f, 325.f));
     mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1070.f, 330.f))->SetString(">")->SetColor(sf::Color::Black);
+
+    // Play button
+    mainMenu.AddObject<feg::Button>(gm.rm.GetTexture("res/WhiteSquare.png"))->SetFunction(std::bind(LoadGames, &currentScene, mainScene, std::cref(maps), std::cref(files), player))
+        ->SetPosition(sf::Vector2f(1000.f, 525.f));
+    mainMenu.AddObject(gm.rm.GetFont("res/arial.ttf"))->SetPosition(sf::Vector2f(1055.f, 530.f))->SetString("Play")->SetColor(sf::Color::Black);
 
     // GAME
     sf::RenderWindow window(sf::VideoMode(xWin, yWin), "Fight Epitech Grades");
