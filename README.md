@@ -1,4 +1,7 @@
 # FightEpitechGrades
+
+[![GuardRails badge](https://badges.production.guardrails.io/Xwilarg/FightEpitechGrades.svg)](https://www.guardrails.io)
+
 This project is a 2D video game made with the SFML where you fight your EPITECH's grades
 
 
